@@ -129,9 +129,11 @@
         <p class="text-xs text-gray-500">Site içeriğini düzenleyin</p>
        </div>
       </div>
-      <div class="flex items-center gap-3"><button id="export-changes-btn" class="px-4 py-2 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg transition-colors flex items-center gap-2">
+      <div class="flex items-center gap-3"><button id="publish-changes-btn" class="px-4 py-2 text-sm font-medium text-white bg-sky-600 hover:bg-sky-700 rounded-lg transition-colors flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+        </svg> Değişiklikleri Yayınla </button> <button id="export-changes-btn" class="px-4 py-2 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg transition-colors flex items-center gap-2">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-        </svg> Değişiklikleri Export Et </button> <button id="view-site-btn" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2">
+        </svg> Export Et </button> <button id="view-site-btn" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
         </svg> Siteyi Görüntüle </button> <button id="logout-btn" class="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition-colors flex items-center gap-2">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -2188,6 +2190,48 @@
     document.getElementById('admin-login-link')?.addEventListener('click', () => {
       document.getElementById('main-site').classList.add('hidden');
       document.getElementById('login-screen').classList.remove('hidden');
+    });
+
+    document.getElementById('publish-changes-btn')?.addEventListener('click', async () => {
+      try {
+        const btn = document.getElementById('publish-changes-btn');
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<div class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div> Yayınlanıyor...';
+
+        const data = localStorage.getItem('asm_website_data');
+        if (!data) {
+          showToast('Yayınlanacak veri bulunamadı!', 'error');
+          btn.disabled = false;
+          btn.innerHTML = originalText;
+          return;
+        }
+
+        // Cloudflare API'ye kaydet (eğer varsa)
+        const apiSuccess = await saveToAPI(JSON.parse(data));
+        
+        if (apiSuccess) {
+          showToast('Değişiklikler anında yayınlandı! Tüm ziyaretçiler için görünür.', 'success');
+        } else {
+          // API yoksa, export et ve kullanıcıya talimat ver
+          const blob = new Blob([data], { type: 'application/json' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `asm-website-data-${new Date().toISOString().split('T')[0]}.json`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+          showToast('Değişiklikler export edildi! JSON dosyasını bana gönderin, GitHub\'a push edeceğim.', 'success');
+        }
+
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      } catch (error) {
+        showToast('Yayınlama hatası: ' + error.message, 'error');
+        document.getElementById('publish-changes-btn').disabled = false;
+      }
     });
 
     document.getElementById('export-changes-btn')?.addEventListener('click', () => {
