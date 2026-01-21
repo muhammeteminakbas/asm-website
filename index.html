@@ -662,8 +662,38 @@
       root.style.setProperty('--surface', config.surface_color || defaultConfig.surface_color);
     }
 
+    // Cloudflare API endpoint (Pages Functions)
+    const API_ENDPOINT = '/api/data';
+
+    async function fetchFromAPI() {
+      try {
+        const response = await fetch(API_ENDPOINT);
+        if (response.ok) {
+          return await response.json();
+        }
+      } catch (error) {
+        console.warn('API hatası, localStorage kullanılıyor:', error);
+      }
+      return null;
+    }
+
+    async function saveToAPI(data) {
+      try {
+        const response = await fetch(API_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        return response.ok;
+      } catch (error) {
+        console.warn('API kaydetme hatası:', error);
+        return false;
+      }
+    }
+
     function createLocalDataSdk(storageKey = 'asm_website_data') {
       let handler = null;
+      let useAPI = true; // API kullanımını kontrol et
 
       const safeParse = (raw) => {
         try {
@@ -679,7 +709,7 @@
           __backendId: d.__backendId ?? d.id
         }));
 
-      const read = () => {
+      const readLocal = () => {
         try {
           return normalize(safeParse(localStorage.getItem(storageKey)));
         } catch {
@@ -687,7 +717,7 @@
         }
       };
 
-      const write = (arr) => {
+      const writeLocal = (arr) => {
         try {
           localStorage.setItem(storageKey, JSON.stringify(arr));
           return true;
@@ -707,37 +737,67 @@
         return arr.findIndex((d) => (d.__backendId ?? d.id) === key);
       };
 
+      const syncToAPI = async (arr) => {
+        if (useAPI) {
+          const success = await saveToAPI(arr);
+          if (!success) {
+            useAPI = false; // API çalışmıyorsa localStorage'a geç
+          }
+        }
+        // Her durumda localStorage'a da kaydet (fallback)
+        writeLocal(arr);
+      };
+
       return {
         async init(h) {
           handler = h;
-          const arr = read();
+          let arr = [];
+          
+          // Önce API'den veri çekmeyi dene
+          if (useAPI) {
+            const apiData = await fetchFromAPI();
+            if (apiData && Array.isArray(apiData) && apiData.length > 0) {
+              arr = normalize(apiData);
+              writeLocal(arr); // LocalStorage'a da kaydet
+            } else {
+              // API'de veri yoksa localStorage'dan oku
+              arr = readLocal();
+              // Eğer localStorage'da veri varsa API'ye senkronize et
+              if (arr.length > 0) {
+                await syncToAPI(arr);
+              }
+            }
+          } else {
+            arr = readLocal();
+          }
+          
           notify(arr);
           return { isOk: true };
         },
         async create(item) {
-          const arr = read();
+          const arr = readLocal();
           const backendId = item?.__backendId ?? item?.id ?? `local-${Date.now()}`;
           const created = { ...item, __backendId: backendId, id: item?.id ?? backendId };
           arr.push(created);
-          if (!write(arr)) return { isOk: false };
+          await syncToAPI(arr);
           notify(arr);
           return { isOk: true };
         },
         async update(item) {
-          const arr = read();
+          const arr = readLocal();
           const idx = findIndex(arr, item);
           if (idx === -1) return { isOk: false };
           arr[idx] = { ...arr[idx], ...item, __backendId: arr[idx].__backendId ?? arr[idx].id };
-          if (!write(arr)) return { isOk: false };
+          await syncToAPI(arr);
           notify(arr);
           return { isOk: true };
         },
         async delete(item) {
-          const arr = read();
+          const arr = readLocal();
           const idx = findIndex(arr, item);
           if (idx === -1) return { isOk: false };
           arr.splice(idx, 1);
-          if (!write(arr)) return { isOk: false };
+          await syncToAPI(arr);
           notify(arr);
           return { isOk: true };
         }
