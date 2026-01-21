@@ -1044,23 +1044,21 @@
 
       // Görsellere tıklama event'i ekle
       const slides = document.querySelectorAll('.gallery-slide');
-      slides.forEach(slide => {
+      slides.forEach((slide, slideIndex) => {
         slide.addEventListener('click', (e) => {
           // Navigation butonlarına tıklama durumunda modal açma
           if (e.target.closest('#prev-slide') || e.target.closest('#next-slide') || e.target.closest('.gallery-dot')) {
             return;
           }
-          const imageId = slide.dataset.imageId;
-          if (imageId) {
-            openGalleryModal(imageId);
-          }
+          // Slide index'ini kullanarak sıralanmış görseller dizisinden doğru görseli al
+          openGalleryModalByIndex(slideIndex);
         });
       });
     }
 
-    function openGalleryModal(imageId) {
-      const galleryImages = allData.filter(d => d.type === 'gallery');
-      const image = galleryImages.find(img => (img.__backendId || img.id) === imageId);
+    function openGalleryModalByIndex(index) {
+      const galleryImages = allData.filter(d => d.type === 'gallery').sort((a, b) => (a.gallery_order || 0) - (b.gallery_order || 0));
+      const image = galleryImages[index];
       
       if (!image) return;
 
@@ -1077,6 +1075,29 @@
         modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden'; // Scroll'u engelle
         stopSlideShow(); // Slider'ı durdur
+      }
+    }
+
+    // Eski fonksiyon (geriye dönük uyumluluk için)
+    function openGalleryModal(imageId) {
+      const galleryImages = allData.filter(d => d.type === 'gallery').sort((a, b) => (a.gallery_order || 0) - (b.gallery_order || 0));
+      const image = galleryImages.find(img => (img.__backendId || img.id) === imageId);
+      
+      if (!image) return;
+
+      const modal = document.getElementById('gallery-modal');
+      const modalTitle = document.getElementById('gallery-modal-title');
+      const modalImage = document.getElementById('gallery-modal-image');
+      const modalDescription = document.getElementById('gallery-modal-description');
+
+      if (modal && modalTitle && modalImage && modalDescription) {
+        modalTitle.textContent = image.gallery_title || 'Başlık Yok';
+        modalImage.src = image.gallery_image_url;
+        modalImage.alt = image.gallery_title || '';
+        modalDescription.textContent = image.gallery_description || 'Açıklama bulunmuyor.';
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        stopSlideShow();
       }
     }
 
