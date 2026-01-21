@@ -770,6 +770,7 @@
               }
             }
           } else {
+            // API yoksa localStorage'dan oku, ama boşsa varsayılan veriler yüklenecek (init fonksiyonunda)
             arr = readLocal();
           }
           
@@ -2348,7 +2349,16 @@
       const initResult = await window.dataSdk.init(dataHandler);
       
       if (initResult.isOk) {
-        if (allData.length === 0) {
+        // localStorage'da veri olsa bile, eğer varsayılan verilerle uyumlu değilse yeniden yükle
+        // Bu, yeni ziyaretçiler için güncel verilerin görünmesini sağlar
+        const general = allData.find(d => d.type === 'general');
+        const hasDefaultData = general && general.site_title === 'Taşkent Merkez Aile Sağlığı Merkezi';
+        
+        if (allData.length === 0 || !hasDefaultData) {
+          // localStorage'ı temizle ve varsayılan verileri yükle
+          if (allData.length > 0 && !hasDefaultData) {
+            localStorage.removeItem('asm_website_data');
+          }
           await initializeDefaultData();
         }
 
