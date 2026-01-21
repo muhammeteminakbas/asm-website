@@ -376,7 +376,22 @@
       </svg></button> <!-- Dots Indicator -->
      <div id="gallery-dots" class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2"><!-- Dots will be loaded here -->
      </div>
-    </section><!-- Hero Section -->
+    </section><!-- Gallery Modal -->
+    <div id="gallery-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+     <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+      <div class="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10">
+       <h3 id="gallery-modal-title" class="text-2xl font-bold text-gray-800"></h3>
+       <button id="close-gallery-modal" class="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors focus-ring">
+        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+       </button>
+      </div>
+      <div class="p-6">
+       <img id="gallery-modal-image" src="" alt="" class="w-full h-auto rounded-lg mb-6 object-contain max-h-[60vh]">
+       <div id="gallery-modal-description" class="text-gray-700 leading-relaxed whitespace-pre-line"></div>
+      </div>
+     </div>
+    </div><!-- Hero Section -->
     <section id="anasayfa" class="bg-gradient-to-br from-sky-50 via-white to-emerald-50 py-16 md:py-24">
      <div class="max-w-6xl mx-auto px-4">
       <div class="flex flex-col md:flex-row items-center gap-12">
@@ -919,15 +934,15 @@
       }
 
       gallerySlider.innerHTML = galleryImages.map((img, idx) => `
-        <div class="gallery-slide absolute inset-0 transition-opacity duration-700 ${idx === 0 ? 'opacity-100' : 'opacity-0'}" data-slide="${idx}">
+        <div class="gallery-slide absolute inset-0 transition-opacity duration-700 ${idx === 0 ? 'opacity-100' : 'opacity-0'}" data-slide="${idx}" data-image-id="${img.__backendId || img.id}">
           <img src="${img.gallery_image_url}" alt="${img.gallery_title || ''}" loading="lazy" 
             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'800\\' height=\\'600\\'%3E%3Crect fill=\\'%23334155\\' width=\\'800\\' height=\\'600\\'/%3E%3Ctext fill=\\'%23ffffff\\' font-family=\\'Arial\\' font-size=\\'24\\' x=\\'50%25\\' y=\\'50%25\\' text-anchor=\\'middle\\'%3EGörsel%20Yüklenemedi%3C/text%3E%3C/svg%3E'; this.alt='Görsel yüklenemedi';"
-            class="w-full h-full object-cover">
-          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
-          <div class="absolute bottom-0 left-0 right-0 p-8 md:p-12 text-white z-10">
+            class="w-full h-full object-cover cursor-pointer">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent cursor-pointer"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-8 md:p-12 text-white z-10 cursor-pointer">
             <div class="max-w-6xl mx-auto">
               <h3 class="text-3xl md:text-4xl font-bold mb-3">${img.gallery_title || 'Başlık Yok'}</h3>
-              <p class="text-lg md:text-xl text-gray-200 max-w-3xl">${img.gallery_description || ''}</p>
+              <p class="text-lg md:text-xl text-gray-200 max-w-3xl line-clamp-2">${img.gallery_description ? (img.gallery_description.length > 150 ? img.gallery_description.substring(0, 150) + '...' : img.gallery_description) : ''}</p>
             </div>
           </div>
         </div>
@@ -1026,6 +1041,52 @@
           startSlideShow();
         });
       });
+
+      // Görsellere tıklama event'i ekle
+      const slides = document.querySelectorAll('.gallery-slide');
+      slides.forEach(slide => {
+        slide.addEventListener('click', (e) => {
+          // Navigation butonlarına tıklama durumunda modal açma
+          if (e.target.closest('#prev-slide') || e.target.closest('#next-slide') || e.target.closest('.gallery-dot')) {
+            return;
+          }
+          const imageId = slide.dataset.imageId;
+          if (imageId) {
+            openGalleryModal(imageId);
+          }
+        });
+      });
+    }
+
+    function openGalleryModal(imageId) {
+      const galleryImages = allData.filter(d => d.type === 'gallery');
+      const image = galleryImages.find(img => (img.__backendId || img.id) === imageId);
+      
+      if (!image) return;
+
+      const modal = document.getElementById('gallery-modal');
+      const modalTitle = document.getElementById('gallery-modal-title');
+      const modalImage = document.getElementById('gallery-modal-image');
+      const modalDescription = document.getElementById('gallery-modal-description');
+
+      if (modal && modalTitle && modalImage && modalDescription) {
+        modalTitle.textContent = image.gallery_title || 'Başlık Yok';
+        modalImage.src = image.gallery_image_url;
+        modalImage.alt = image.gallery_title || '';
+        modalDescription.textContent = image.gallery_description || 'Açıklama bulunmuyor.';
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // Scroll'u engelle
+        stopSlideShow(); // Slider'ı durdur
+      }
+    }
+
+    function closeGalleryModal() {
+      const modal = document.getElementById('gallery-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = ''; // Scroll'u tekrar etkinleştir
+        startSlideShow(); // Slider'ı tekrar başlat
+      }
     }
 
     function renderSite() {
@@ -2375,6 +2436,36 @@
           await window.dataSdk.update(payload);
         }
       }
+
+      // Modal event listener'larını başlat
+      setupGalleryModalListeners();
+    }
+
+    function setupGalleryModalListeners() {
+      // Modal kapatma event listener'ları
+      const closeBtn = document.getElementById('close-gallery-modal');
+      const modal = document.getElementById('gallery-modal');
+      
+      if (closeBtn) {
+        closeBtn.addEventListener('click', closeGalleryModal);
+      }
+      
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target.id === 'gallery-modal') {
+            closeGalleryModal();
+          }
+        });
+      }
+      
+      // ESC tuşu ile kapatma
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (modal && !modal.classList.contains('hidden')) {
+            closeGalleryModal();
+          }
+        }
+      });
     }
 
     if (window.elementSdk) {
