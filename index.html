@@ -882,7 +882,7 @@
             </div>
             <h4 class="font-semibold text-gray-800 mb-1">${doc.doctor_name || 'Dr. İsim'}</h4>
             <p class="text-sky-600 text-sm font-medium mb-2">${doc.doctor_title || 'Aile Hekimi'}</p>
-            <p class="text-gray-500 text-xs">${doc.doctor_experience || '10 yıllık deneyim'}</p>
+            ${doc.doctor_unit ? `<p class="text-gray-500 text-xs mt-1">${doc.doctor_unit}</p>` : ''}
           </div>
         `).join('');
       }
@@ -953,6 +953,7 @@
           doctor_name: 'Dr. Oğuzhan ÇEŞMECİ',
           doctor_title: 'Aile Hekimi',
           doctor_experience: '',
+          doctor_unit: '003 No\'lu AHB',
           doctor_color: 'from-sky-400 to-sky-600'
         },
         {
@@ -961,6 +962,7 @@
           doctor_name: 'Dr. Bekir Can ULUSOY',
           doctor_title: 'Aile Hekimi',
           doctor_experience: '',
+          doctor_unit: '001 No\'lu AHB',
           doctor_color: 'from-emerald-400 to-emerald-600'
         },
         {
@@ -1068,6 +1070,41 @@
             localStorage.removeItem('asm_website_data');
           }
           await initializeDefaultData();
+        } else {
+          // Mevcut verileri güncelle (eksik alanları ekle)
+          let updated = false;
+          
+          // Doktor birim bilgilerini güncelle
+          const doctors = allData.filter(d => d.type === 'doctor');
+          for (const doc of doctors) {
+            if (!doc.doctor_unit) {
+              if (doc.doctor_name && doc.doctor_name.includes('Oğuzhan')) {
+                doc.doctor_unit = '003 No\'lu AHB';
+                await window.dataSdk.update(doc);
+                updated = true;
+              } else if (doc.doctor_name && doc.doctor_name.includes('Bekir')) {
+                doc.doctor_unit = '001 No\'lu AHB';
+                await window.dataSdk.update(doc);
+                updated = true;
+              }
+            }
+          }
+          
+          // General bilgilerini güncelle (about_logo_url eksikse ekle)
+          const general = allData.find(d => d.type === 'general');
+          if (general && !general.about_logo_url) {
+            general.about_logo_url = 'https://uzak.konyasm.gov.tr:15722/img/310/20250807_143948.jpg';
+            await window.dataSdk.update(general);
+            updated = true;
+          }
+          
+          if (updated) {
+            // Veriler güncellendi, yeniden yükle
+            const reloadResult = await window.dataSdk.load();
+            if (reloadResult.isOk) {
+              allData = reloadResult.data || [];
+            }
+          }
         }
 
       }
