@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="tr" class="h-full">
  <head>
   <meta charset="UTF-8">
@@ -156,11 +156,38 @@
         </div>
         <div><label class="block text-sm font-medium text-gray-700 mb-2">Telefon</label> <input type="text" id="edit-phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
         </div>
-        <div class="md:col-span-2"><label class="block text-sm font-medium text-gray-700 mb-2">Logo URL (Üst Menü)</label> <input type="url" id="edit-logo-url" placeholder="https://..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
+        <div class="md:col-span-2">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Logo (Üst Menü)</label>
+          <div class="space-y-2">
+            <input type="url" id="edit-logo-url" placeholder="https://... veya dosya yükleyin" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
+            <div class="flex items-center gap-2">
+              <input type="file" id="edit-logo-file" accept="image/*" class="hidden">
+              <button type="button" onclick="document.getElementById('edit-logo-file').click()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium rounded-lg transition-colors border border-gray-300">Dosya Yükle</button>
+              <span id="edit-logo-file-name" class="text-sm text-gray-500"></span>
+            </div>
+          </div>
         </div>
-        <div class="md:col-span-2"><label class="block text-sm font-medium text-gray-700 mb-2">Hero Logo/Görsel URL (Ana Sayfa Sağ Taraf)</label> <input type="url" id="edit-hero-logo-url" placeholder="https://..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
+        <div class="md:col-span-2">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Hero Logo/Görsel (Ana Sayfa Sağ Taraf)</label>
+          <div class="space-y-2">
+            <input type="url" id="edit-hero-logo-url" placeholder="https://... veya dosya yükleyin" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
+            <div class="flex items-center gap-2">
+              <input type="file" id="edit-hero-logo-file" accept="image/*" class="hidden">
+              <button type="button" onclick="document.getElementById('edit-hero-logo-file').click()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium rounded-lg transition-colors border border-gray-300">Dosya Yükle</button>
+              <span id="edit-hero-logo-file-name" class="text-sm text-gray-500"></span>
+            </div>
+          </div>
         </div>
-        <div class="md:col-span-2"><label class="block text-sm font-medium text-gray-700 mb-2">Hakkımızda Logo URL</label> <input type="url" id="edit-about-logo-url" placeholder="https://..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
+        <div class="md:col-span-2">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Hakkımızda Logo</label>
+          <div class="space-y-2">
+            <input type="url" id="edit-about-logo-url" placeholder="https://... veya dosya yükleyin" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
+            <div class="flex items-center gap-2">
+              <input type="file" id="edit-about-logo-file" accept="image/*" class="hidden">
+              <button type="button" onclick="document.getElementById('edit-about-logo-file').click()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium rounded-lg transition-colors border border-gray-300">Dosya Yükle</button>
+              <span id="edit-about-logo-file-name" class="text-sm text-gray-500"></span>
+            </div>
+          </div>
         </div>
         <div class="md:col-span-2"><label class="block text-sm font-medium text-gray-700 mb-2">Ana Başlık</label> <input type="text" id="edit-hero-title" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
         </div>
@@ -319,8 +346,15 @@
          </ul>
         </div>
         <form id="new-gallery-form" class="space-y-3">
-         <div><label class="block text-sm font-medium text-gray-700 mb-1">Görsel URL</label> <input type="url" id="new-gallery-url" required placeholder="https://i.imgur.com/ornek123.jpg" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
-          <p class="text-xs text-gray-500 mt-1">Örnek: https://i.imgur.com/abc123.jpg</p>
+         <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Görsel URL veya Dosya Yükle</label>
+          <input type="url" id="new-gallery-url" placeholder="https://i.imgur.com/ornek123.jpg veya dosya yükleyin" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm mb-2">
+          <div class="flex items-center gap-2">
+            <input type="file" id="new-gallery-file" accept="image/*" class="hidden">
+            <button type="button" onclick="document.getElementById('new-gallery-file').click()" class="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium rounded-lg transition-colors border border-gray-300">Dosya Yükle</button>
+            <span id="new-gallery-file-name" class="text-xs text-gray-500"></span>
+          </div>
+          <p class="text-xs text-gray-500 mt-1">URL örneği: https://i.imgur.com/abc123.jpg veya dosya yükleyin (max 5MB)</p>
          </div><!-- Image Preview -->
          <div id="image-preview-container" class="hidden"><label class="block text-sm font-medium text-gray-700 mb-1">Önizleme</label>
           <div class="relative"><img id="image-preview" src="" alt="Önizleme" class="w-full h-48 object-cover rounded-lg border border-gray-300">
@@ -1473,6 +1507,14 @@
         const newForm = newGalleryFormElement.cloneNode(true);
         newGalleryFormElement.replaceWith(newForm);
         
+        // Galeri dosya yükleme event listener'ını bağla
+        const galleryFileInput = newForm.querySelector('#new-gallery-file');
+        if (galleryFileInput) {
+          galleryFileInput.addEventListener('change', async (e) => {
+            await handleFileUpload(e.target.files[0], 'new-gallery-url', 'new-gallery-file-name');
+          });
+        }
+        
         newForm.addEventListener('submit', async (e) => {
           e.preventDefault();
           
@@ -1486,10 +1528,18 @@
           submitBtn.disabled = true;
           submitBtn.innerHTML = '<div class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div> Ekleniyor...';
 
+          const imageUrl = newForm.querySelector('#new-gallery-url').value;
+          if (!imageUrl || imageUrl.trim() === '') {
+            showToast('Lütfen bir görsel URL\'si girin veya dosya yükleyin!', 'error');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'Kaydet';
+            return;
+          }
+          
           const result = await window.dataSdk.create({
             id: 'gallery-' + Date.now(),
             type: 'gallery',
-            gallery_image_url: newForm.querySelector('#new-gallery-url').value,
+            gallery_image_url: imageUrl,
             gallery_title: newForm.querySelector('#new-gallery-title').value,
             gallery_description: newForm.querySelector('#new-gallery-description').value,
             gallery_order: galleryImages.length
@@ -1499,6 +1549,11 @@
             showToast('Görsel başarıyla eklendi!', 'success');
             document.getElementById('add-gallery-form').classList.add('hidden');
             newForm.reset();
+            // Dosya adı gösterimini temizle
+            const fileNameSpan = document.getElementById('new-gallery-file-name');
+            if (fileNameSpan) fileNameSpan.textContent = '';
+            // Event listener'ı yeniden bağla
+            setupGalleryFileUploadListener();
           } else {
             showToast('Görsel eklenirken hata oluştu!', 'error');
           }
@@ -2467,6 +2522,80 @@
 
       // Modal event listener'larını başlat
       setupGalleryModalListeners();
+      
+      // Dosya yükleme event listener'larını başlat
+      setupFileUploadListeners();
+      
+      // Galeri dosya yükleme event listener'ını başlat
+      setupGalleryFileUploadListener();
+    }
+    
+    function setupGalleryFileUploadListener() {
+      const galleryFileInput = document.getElementById('new-gallery-file');
+      if (galleryFileInput) {
+        galleryFileInput.addEventListener('change', async (e) => {
+          await handleFileUpload(e.target.files[0], 'new-gallery-url', 'new-gallery-file-name');
+        });
+      }
+    }
+
+    function setupFileUploadListeners() {
+      // Logo dosya yükleme
+      const logoFileInput = document.getElementById('edit-logo-file');
+      const heroLogoFileInput = document.getElementById('edit-hero-logo-file');
+      const aboutLogoFileInput = document.getElementById('edit-about-logo-file');
+      
+      if (logoFileInput) {
+        logoFileInput.addEventListener('change', async (e) => {
+          await handleFileUpload(e.target.files[0], 'edit-logo-url', 'edit-logo-file-name');
+        });
+      }
+      
+      if (heroLogoFileInput) {
+        heroLogoFileInput.addEventListener('change', async (e) => {
+          await handleFileUpload(e.target.files[0], 'edit-hero-logo-url', 'edit-hero-logo-file-name');
+        });
+      }
+      
+      if (aboutLogoFileInput) {
+        aboutLogoFileInput.addEventListener('change', async (e) => {
+          await handleFileUpload(e.target.files[0], 'edit-about-logo-url', 'edit-about-logo-file-name');
+        });
+      }
+    }
+
+    async function handleFileUpload(file, urlInputId, fileNameSpanId) {
+      if (!file) return;
+      
+      // Dosya boyutu kontrolü (5MB limit)
+      const maxSize = 5 * 1024 * 1024; // 5MB
+      if (file.size > maxSize) {
+        alert('Dosya boyutu 5MB\'dan büyük olamaz. Lütfen daha küçük bir dosya seçin.');
+        return;
+      }
+      
+      // Dosya adını göster
+      const fileNameSpan = document.getElementById(fileNameSpanId);
+      if (fileNameSpan) {
+        fileNameSpan.textContent = file.name;
+      }
+      
+      // Base64'e çevir
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const dataUrl = e.target.result;
+        const urlInput = document.getElementById(urlInputId);
+        if (urlInput) {
+          urlInput.value = dataUrl;
+        }
+      };
+      reader.onerror = () => {
+        alert('Dosya okunurken bir hata oluştu. Lütfen tekrar deneyin.');
+        if (fileNameSpan) {
+          fileNameSpan.textContent = '';
+        }
+      };
+      reader.readAsDataURL(file);
     }
 
     function setupGalleryModalListeners() {
