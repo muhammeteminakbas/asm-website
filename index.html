@@ -57,302 +57,18 @@
   <style>@view-transition { navigation: auto; }</style>
  </head>
  <body class="h-full bg-white text-gray-800">
-  <div id="app-wrapper" class="w-full h-full overflow-auto scroll-smooth"><!-- Login Screen -->
-   <div id="login-screen" class="hidden w-full h-full bg-gradient-to-br from-sky-50 via-white to-emerald-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
-     <div class="flex justify-center mb-6">
-      <div class="w-16 h-16 rounded-full bg-gradient-to-br from-sky-500 to-emerald-500 flex items-center justify-center">
-       <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-       </svg>
-      </div>
-     </div>
-     <h2 class="text-2xl font-bold text-gray-800 text-center mb-2">Admin Girişi</h2>
-     <p class="text-gray-500 text-center mb-6 text-sm">Yönetim paneline erişmek için giriş yapın</p>
-     <div id="login-error" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">
-      Kullanıcı adı veya şifre hatalı!
-     </div>
-     <form id="login-form" class="space-y-4">
-      <div><label for="username" class="block text-sm font-medium text-gray-700 mb-2">Kullanıcı Adı</label> <input type="text" id="username" name="username" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition-all" placeholder="Kullanıcı adınızı girin">
-      </div>
-      <div><label for="password" class="block text-sm font-medium text-gray-700 mb-2">Şifre</label> <input type="password" id="password" name="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition-all" placeholder="Şifrenizi girin">
-     </div><button type="submit" id="login-btn" class="w-full btn-primary focus-ring font-medium py-3 rounded-lg transition-colors flex items-center justify-center gap-2">
-       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-       </svg> Giriş Yap </button>
-     </form>
-     <button id="forgot-password-link" type="button" class="w-full text-sky-700 hover:text-sky-800 text-sm font-medium py-2">
-      Şifremi unuttum
-     </button>
-     <div id="password-reset-panel" class="hidden mt-4 bg-white rounded-xl border border-gray-200 p-4">
-      <h3 class="font-semibold text-gray-800 mb-3">Şifre Sıfırlama</h3>
-      <p class="text-xs text-gray-500 mb-3">Kurtarma kodunuz varsa yeni şifre belirleyebilirsiniz.</p>
-      <form id="password-reset-form" class="space-y-3">
-       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Kullanıcı Adı</label>
-        <input type="text" id="reset-username" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus-ring" placeholder="admin">
-       </div>
-       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Kurtarma Kodu</label>
-        <input type="text" id="reset-code" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus-ring" placeholder="XXXX-XXXX">
-       </div>
-       <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-        <div>
-         <label class="block text-sm font-medium text-gray-700 mb-1">Yeni Şifre</label>
-         <input type="password" id="reset-new-password" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus-ring">
-        </div>
-        <div>
-         <label class="block text-sm font-medium text-gray-700 mb-1">Yeni Şifre (Tekrar)</label>
-         <input type="password" id="reset-new-password-2" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus-ring">
-        </div>
-       </div>
-       <div class="flex gap-2">
-        <button type="submit" class="px-4 py-2 btn-primary focus-ring text-white text-sm font-medium rounded-lg transition-colors">Sıfırla</button>
-        <button type="button" id="cancel-reset-btn" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm font-medium rounded-lg transition-colors">Vazgeç</button>
-       </div>
-      </form>
-     </div>
-     <div class="mt-6 p-4 bg-sky-50 rounded-lg">
-      <p class="text-xs text-sky-700 text-center"><strong>Not:</strong><br>
-        Yönetici şifresi artık sistemde düz metin olarak tutulmaz.</p>
-     </div><button id="back-to-site" class="w-full mt-4 text-gray-600 hover:text-gray-800 text-sm font-medium py-2"> ← Ana Sayfaya Dön </button>
-    </div>
-   </div><!-- Admin Panel -->
-   <div id="admin-panel" class="hidden w-full h-full bg-gray-50"><!-- Admin Header -->
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-     <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-       <div class="w-10 h-10 rounded-full bg-gradient-to-br from-sky-500 to-emerald-500 flex items-center justify-center">
-        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
-       </div>
-       <div>
-        <h1 class="text-lg font-bold text-gray-800">Yönetim Paneli</h1>
-        <p class="text-xs text-gray-500">Site içeriğini düzenleyin</p>
-       </div>
-      </div>
-      <div class="flex items-center gap-3"><button id="publish-changes-btn" class="px-4 py-2 text-sm font-medium text-white bg-sky-600 hover:bg-sky-700 rounded-lg transition-colors flex items-center gap-2">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-        </svg> Değişiklikleri Yayınla </button> <button id="export-changes-btn" class="px-4 py-2 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg transition-colors flex items-center gap-2">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-        </svg> Export Et </button> <button id="view-site-btn" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-        </svg> Siteyi Görüntüle </button> <button id="logout-btn" class="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition-colors flex items-center gap-2">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-        </svg> Çıkış </button>
-      </div>
-     </div>
-    </header>
-    <div class="max-w-7xl mx-auto px-4 py-8">
-     <div id="admin-loading" class="text-center py-12">
-      <div class="inline-block w-12 h-12 border-4 border-sky-200 border-t-sky-600 rounded-full animate-spin"></div>
-      <p class="text-gray-600 mt-4">Yükleniyor...</p>
-     </div>
-     <div id="admin-content" class="hidden space-y-6"><!-- Genel Bilgiler -->
-      <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-       <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-        <svg class="w-6 h-6 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg> Genel Bilgiler</h2>
-       <form id="general-form" class="grid md:grid-cols-2 gap-6">
-        <div><label class="block text-sm font-medium text-gray-700 mb-2">Site Başlığı</label> <input type="text" id="edit-site-title" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
-        </div>
-        <div><label class="block text-sm font-medium text-gray-700 mb-2">Telefon</label> <input type="text" id="edit-phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
-        </div>
-        <div class="md:col-span-2"><label class="block text-sm font-medium text-gray-700 mb-2">Logo URL (Üst Menü)</label> <input type="url" id="edit-logo-url" placeholder="https://..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
-        </div>
-        <div class="md:col-span-2"><label class="block text-sm font-medium text-gray-700 mb-2">Hero Logo/Görsel URL (Ana Sayfa Sağ Taraf)</label> <input type="url" id="edit-hero-logo-url" placeholder="https://..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
-        </div>
-        <div class="md:col-span-2"><label class="block text-sm font-medium text-gray-700 mb-2">Hakkımızda Logo URL</label> <input type="url" id="edit-about-logo-url" placeholder="https://..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
-        </div>
-        <div class="md:col-span-2"><label class="block text-sm font-medium text-gray-700 mb-2">Ana Başlık</label> <input type="text" id="edit-hero-title" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
-        </div>
-        <div class="md:col-span-2"><label class="block text-sm font-medium text-gray-700 mb-2">Alt Başlık</label> <textarea id="edit-hero-subtitle" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none"></textarea>
-        </div>
-        <div class="md:col-span-2"><label class="block text-sm font-medium text-gray-700 mb-2">Adres</label> <input type="text" id="edit-address" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
-        </div>
-        <div><label class="block text-sm font-medium text-gray-700 mb-2">İlçe</label> <input type="text" id="edit-address-district" placeholder="Merkez" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
-        </div>
-        <div><label class="block text-sm font-medium text-gray-700 mb-2">İl</label> <input type="text" id="edit-address-city" placeholder="Ankara" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
-        </div>
-        <div class="md:col-span-2 grid md:grid-cols-2 gap-4">
-         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Hakkımızda Başlığı</label>
-          <input type="text" id="edit-about-title" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
-         </div>
-         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Hakkımızda Üst Metin</label>
-          <textarea id="edit-about-p1" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none"></textarea>
-         </div>
-         <div class="md:col-span-2">
-          <label class="block text-sm font-medium text-gray-700 mb-2">Hakkımızda Alt Metin</label>
-          <textarea id="edit-about-p2" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none"></textarea>
-         </div>
-        </div>
-        <div class="md:col-span-2"><button type="submit" class="px-6 py-2 bg-sky-600 hover:bg-sky-700 text-white font-medium rounded-lg transition-colors"> Kaydet </button>
-        </div>
-       </form>
-      </div><!-- Çalışma Saatleri -->
-      <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-       <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-        <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg> Çalışma Saatleri</h2>
-       <form id="hours-form" class="grid md:grid-cols-3 gap-6">
-        <div><label class="block text-sm font-medium text-gray-700 mb-2">Hafta İçi (Pzt-Cuma)</label> <input type="text" id="edit-weekday-hours" placeholder="08:00 - 17:00" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
-        </div>
-        <div><label class="block text-sm font-medium text-gray-700 mb-2">Cumartesi</label> <input type="text" id="edit-saturday-hours" placeholder="08:00 - 13:00" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
-        </div>
-        <div><label class="block text-sm font-medium text-gray-700 mb-2">Pazar</label> <input type="text" id="edit-sunday-hours" placeholder="Kapalı" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
-        </div>
-        <div class="md:col-span-3"><button type="submit" class="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg transition-colors"> Kaydet </button>
-        </div>
-       </form>
-      </div><!-- Doktorlar -->
-      <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-       <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-        <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-        </svg> Güvenlik</h2>
-       <form id="password-form" class="grid md:grid-cols-3 gap-4">
-        <div class="md:col-span-3 text-sm text-gray-600">
-         Şifreniz güvenli şekilde (hash) saklanır. Değiştirmek için aşağıdaki alanları doldurun.
-        </div>
-        <div>
-         <label class="block text-sm font-medium text-gray-700 mb-2">Mevcut Şifre</label>
-         <input type="password" id="current-password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
-        </div>
-        <div>
-         <label class="block text-sm font-medium text-gray-700 mb-2">Yeni Şifre</label>
-         <input type="password" id="new-password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
-        </div>
-        <div>
-         <label class="block text-sm font-medium text-gray-700 mb-2">Yeni Şifre (Tekrar)</label>
-         <input type="password" id="new-password-2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
-        </div>
-        <div class="md:col-span-3">
-         <button type="submit" class="px-6 py-2 bg-slate-700 hover:bg-slate-800 text-white font-medium rounded-lg transition-colors"> Şifreyi Değiştir </button>
-        </div>
-       </form>
-      <div class="mt-6 pt-6 border-t border-gray-200">
-       <h3 class="font-semibold text-gray-800 mb-2">Kurtarma Kodları</h3>
-       <p class="text-sm text-gray-600 mb-3">Şifrenizi unutursanız bu kodlarla giriş yapmadan şifre sıfırlayabilirsiniz. Kodlar yalnızca oluşturulduğu anda gösterilir.</p>
-       <div id="recovery-status" class="text-sm text-gray-700 mb-3"></div>
-       <button type="button" id="generate-recovery-btn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg transition-colors">
-        Yeni Kurtarma Kodları Oluştur
-       </button>
-       <div id="recovery-codes-box" class="hidden mt-4 bg-emerald-50 border border-emerald-200 rounded-xl p-4">
-        <p class="text-xs text-emerald-800 mb-2"><strong>Önemli:</strong> Aşağıdaki kodları güvenli bir yere kaydedin. Bu ekranı kapattıktan sonra tekrar gösterilmez.</p>
-        <textarea id="recovery-codes-output" readonly class="w-full h-28 px-3 py-2 border border-emerald-200 rounded-lg text-sm font-mono bg-white"></textarea>
-        <div class="mt-3">
-         <button type="button" id="recovery-codes-copied" class="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-medium rounded-lg transition-colors">Kopyaladım</button>
-        </div>
-       </div>
-      </div>
-      </div><!-- Doktorlar -->
-      <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-       <div class="flex items-center justify-between mb-4 flex-wrap gap-3">
-        <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
-         <svg class="w-6 h-6 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-         </svg> Doktorlar (<span id="doctor-count">0</span> Adet)</h2>
-        <button id="add-doctor-btn" class="px-4 py-2 btn-primary focus-ring text-sm font-medium rounded-lg transition-colors flex items-center gap-2">
-         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
-         Yeni Doktor
-        </button>
-       </div>
-       <div id="add-doctor-form" class="hidden mb-4 bg-sky-50 rounded-xl p-4 border border-sky-100">
-        <form id="new-doctor-form" class="grid md:grid-cols-3 gap-4">
-         <input type="text" id="new-doctor-name" required placeholder="Doktor Adı" class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus-ring">
-         <input type="text" id="new-doctor-title" required placeholder="Uzmanlık" class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus-ring">
-         <input type="text" id="new-doctor-exp" placeholder="Deneyim (örn. 10 yıllık deneyim)" class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus-ring">
-         <div class="md:col-span-3 flex gap-2">
-          <button type="submit" class="px-4 py-2 btn-primary focus-ring text-white text-sm font-medium rounded-lg transition-colors">Ekle</button>
-          <button type="button" id="cancel-doctor-btn" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm font-medium rounded-lg transition-colors">İptal</button>
-         </div>
-        </form>
-       </div>
-       <div id="doctors-list" class="space-y-4"></div>
-      </div>
-      <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-       <div class="flex items-center justify-between mb-4 flex-wrap gap-3">
-        <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
-         <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-         Sağlık Personeli (<span id="staff-count">0</span> Adet)</h2>
-        <button id="add-staff-btn" class="px-4 py-2 btn-primary focus-ring text-sm font-medium rounded-lg transition-colors flex items-center gap-2">
-         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
-         Yeni Personel
-        </button>
-       </div>
-       <div id="add-staff-form" class="hidden mb-4 bg-emerald-50 rounded-xl p-4 border border-emerald-100">
-        <form id="new-staff-form" class="grid md:grid-cols-3 gap-4">
-         <input type="text" id="new-staff-name" required placeholder="Personel Adı" class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus-ring">
-         <input type="text" id="new-staff-title" required placeholder="Görev" class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus-ring">
-         <input type="text" id="new-staff-exp" placeholder="Deneyim (örn. 5 yıllık deneyim)" class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus-ring">
-         <div class="md:col-span-3 flex gap-2">
-          <button type="submit" class="px-4 py-2 btn-primary focus-ring text-white text-sm font-medium rounded-lg transition-colors">Ekle</button>
-          <button type="button" id="cancel-staff-btn" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm font-medium rounded-lg transition-colors">İptal</button>
-         </div>
-        </form>
-       </div>
-       <div id="staff-list" class="space-y-4"></div>
-      </div><!-- Hizmetler -->
-      <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-       <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-        <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-        </svg> Hizmetler (6 Adet)</h2>
-       <div id="services-list" class="space-y-4"></div>
-      </div><!-- Görsel Galerisi -->
-      <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-       <div class="flex items-center justify-between mb-6">
-        <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
-         <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-         </svg> Görsel Galerisi</h2><button id="add-gallery-image-btn" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-2">
-         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-         </svg> Yeni Görsel Ekle </button>
-       </div>
-       <div id="gallery-list" class="space-y-4"></div><!-- Add Gallery Image Form -->
-       <div id="add-gallery-form" class="hidden mt-6 bg-purple-50 rounded-xl p-4 border border-purple-200">
-        <h4 class="font-semibold text-gray-700 mb-3">Yeni Görsel Ekle</h4>
-        <div class="mb-4 bg-blue-50 border border-blue-200 rounded-lg p-3">
-         <p class="text-xs text-blue-800 mb-2"><strong>💡 Görsel URL Nasıl Alınır:</strong></p>
-         <ul class="text-xs text-blue-700 space-y-1 ml-4">
-          <li>• <strong>Imgur:</strong> Görseli yükle → Sağ tık → "Resim adresini kopyala"</li>
-          <li>• <strong>ImgBB:</strong> Görseli yükle → "Direct link" kopyala</li>
-          <li>• URL mutlaka <code>https://</code> ile başlamalı</li>
-          <li>• URL sonu: <code>.jpg</code>, <code>.png</code>, <code>.jpeg</code>, <code>.webp</code> olmalı</li>
-         </ul>
-        </div>
-        <form id="new-gallery-form" class="space-y-3">
-         <div><label class="block text-sm font-medium text-gray-700 mb-1">Görsel URL</label> <input type="url" id="new-gallery-url" required placeholder="https://i.imgur.com/ornek123.jpg" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
-          <p class="text-xs text-gray-500 mt-1">Örnek: https://i.imgur.com/abc123.jpg</p>
-         </div><!-- Image Preview -->
-         <div id="image-preview-container" class="hidden"><label class="block text-sm font-medium text-gray-700 mb-1">Önizleme</label>
-          <div class="relative"><img id="image-preview" src="" alt="Önizleme" class="w-full h-48 object-cover rounded-lg border border-gray-300">
-           <div id="preview-loading" class="hidden absolute inset-0 bg-gray-900/50 rounded-lg flex items-center justify-center">
-            <div class="bg-white rounded-lg px-4 py-2">
-             <div class="inline-block w-5 h-5 border-2 border-purple-600 border-t-transparent rounded-full animate-spin mr-2"></div><span class="text-sm text-gray-700">Yükleniyor...</span>
-            </div>
-           </div>
-          </div>
-         </div>
-         <div><label class="block text-sm font-medium text-gray-700 mb-1">Başlık</label> <input type="text" id="new-gallery-title" required placeholder="Görsel Başlığı" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
-         </div>
-         <div><label class="block text-sm font-medium text-gray-700 mb-1">Açıklama</label> <textarea id="new-gallery-description" rows="2" placeholder="Görsel Açıklaması" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"></textarea>
-         </div>
-         <div class="flex gap-2"><button type="submit" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-colors"> Kaydet </button> <button type="button" id="cancel-gallery-btn" class="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-700 text-sm font-medium rounded-lg transition-colors"> İptal </button>
-         </div>
-        </form>
-       </div>
-      </div>
-     </div>
-    </div>
-   </div><!-- Main Site -->
+  <div id="app-wrapper" class="w-full h-full overflow-auto scroll-smooth">
+   <!-- Main Site -->
    <div id="main-site"><!-- Header -->
     <header id="main-header" class="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
      <div class="max-w-6xl mx-auto px-4 py-3">
       <div class="flex items-center justify-between">
-      <div class="flex items-center gap-3">
+       <div class="flex items-center gap-3">
        <div class="w-12 h-12 rounded-full bg-white ring-1 ring-gray-200 flex items-center justify-center overflow-hidden">
         <img id="site-logo" src="" alt="Logo" class="w-full h-full object-cover hidden">
         <svg id="site-logo-fallback" class="w-7 h-7 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11v4m-2-2h4" />
-        </svg>
-       </div>
+         </svg>
+        </div>
         <div>
          <h1 id="site-title" class="text-lg font-bold text-gray-800">Aile Sağlığı Merkezi</h1>
          <p class="text-xs text-gray-500">T.C. Sağlık Bakanlığı</p>
@@ -369,7 +85,7 @@
       </nav>
      </div>
     </header><!-- Image Gallery Slider -->
-    <section class="relative bg-gray-900 overflow-hidden">
+    <section id="galeri" class="relative bg-gray-900 overflow-hidden">
      <div id="gallery-slider" class="relative w-full h-[500px] md:h-[600px]"><!-- Slides will be loaded here -->
     </div><!-- Navigation Arrows --> <button type="button" aria-label="Önceki görsel" id="prev-slide" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center transition-all focus-ring">
       <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -378,22 +94,7 @@
       </svg></button> <!-- Dots Indicator -->
      <div id="gallery-dots" class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2"><!-- Dots will be loaded here -->
      </div>
-    </section><!-- Gallery Modal -->
-    <div id="gallery-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-     <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-      <div class="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10">
-       <h3 id="gallery-modal-title" class="text-2xl font-bold text-gray-800"></h3>
-       <button id="close-gallery-modal" class="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors focus-ring">
-        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-       </button>
-      </div>
-      <div class="p-6">
-       <img id="gallery-modal-image" src="" alt="" class="w-full h-auto rounded-lg mb-6 object-contain max-h-[60vh]">
-       <div id="gallery-modal-description" class="text-gray-700 leading-relaxed whitespace-pre-line"></div>
-      </div>
-     </div>
-    </div><!-- Hero Section -->
+    </section><!-- Hero Section -->
     <section id="anasayfa" class="bg-gradient-to-br from-sky-50 via-white to-emerald-50 py-16 md:py-24">
      <div class="max-w-6xl mx-auto px-4">
       <div class="flex flex-col md:flex-row items-center gap-12">
@@ -418,7 +119,7 @@
           <div id="hero-logo-fallback" class="flex items-center justify-center">
            <svg class="w-48 h-48 text-sky-600 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-           </svg>
+          </svg>
           </div>
          </div>
         </div>
@@ -460,7 +161,6 @@
            </svg>
           </div>
           <p class="text-sm font-semibold text-gray-800">Taşkent Merkez Aile Sağlığı Merkezi</p>
-          <p class="text-xs text-gray-500 mt-1">Hakkımızda alanına logo eklemek için admin panelinden URL girin.</p>
          </div>
         </div>
        </div>
@@ -583,20 +283,8 @@
         </div>
        </div>
        <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
-        <div class="w-full h-full min-h-[400px] bg-gradient-to-br from-sky-50 to-emerald-50 rounded-xl flex items-center justify-center">
-         <div class="text-center p-8">
-          <div class="w-20 h-20 mx-auto bg-sky-100 rounded-full flex items-center justify-center mb-4">
-           <svg class="w-10 h-10 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-           </svg>
-          </div>
-          <h4 class="text-lg font-semibold text-gray-800 mb-2">Konum Haritası</h4>
-          <p id="map-address" class="text-gray-500 text-sm mb-4">Atatürk Mahallesi, Sağlık Caddesi No:15<br>
-           Merkez / Ankara</p>
-          <div class="inline-flex items-center gap-2 text-sky-600 text-sm font-medium">
-           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-           </svg> Yol Tarifi Al
-          </div>
-         </div>
+        <div class="w-full h-full min-h-[400px] rounded-xl overflow-hidden">
+         <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d563.8184866116518!2d32.49633981768161!3d36.927675480129935!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2s!5e0!3m2!1str!2str!4v1769066046410!5m2!1str!2str" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-full h-full min-h-[400px] rounded-xl"></iframe>
         </div>
        </div>
       </div>
@@ -641,7 +329,7 @@
        </div>
       </div>
       <div class="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
-       <p>© 2024 Aile Sağlığı Merkezi. Tüm hakları saklıdır.</p><button id="admin-login-link" class="text-gray-500 hover:text-white transition-colors text-xs"> Admin Girişi → </button>
+       <p>© 2026 Aile Sağlığı Merkezi. Tüm hakları saklıdır.</p>
       </div>
      </div>
     </footer>
@@ -649,7 +337,6 @@
   </div>
   <script>
     let allData = [];
-    let isLoggedIn = false;
     let currentSlide = 0;
     let slideInterval = null;
     
@@ -834,9 +521,6 @@
       onDataChanged(data) {
         allData = data;
         renderSite();
-        if (isLoggedIn) {
-          renderAdminPanel();
-        }
       }
     };
 
@@ -930,16 +614,17 @@
       if (!gallerySlider || !galleryDots) return;
 
       if (galleryImages.length === 0) {
-        gallerySlider.innerHTML = '<div class="absolute inset-0 flex items-center justify-center bg-gray-800"><p class="text-white text-lg">Admin panelinden görsel ekleyin</p></div>';
+        gallerySlider.innerHTML = '<div class="absolute inset-0 flex items-center justify-center bg-gray-800"><p class="text-white text-lg">Görsel yok</p></div>';
         galleryDots.innerHTML = '';
         return;
       }
 
       gallerySlider.innerHTML = galleryImages.map((img, idx) => `
-        <div class="gallery-slide absolute inset-0 transition-opacity duration-700 ${idx === 0 ? 'opacity-100' : 'opacity-0'}" data-slide="${idx}" data-image-id="${img.__backendId || img.id}">
+        <div class="gallery-slide absolute inset-0 transition-all duration-700 ${idx === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}" data-slide="${idx}" data-image-index="${idx}">
           <img src="${img.gallery_image_url}" alt="${img.gallery_title || ''}" loading="lazy" 
             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'800\\' height=\\'600\\'%3E%3Crect fill=\\'%23334155\\' width=\\'800\\' height=\\'600\\'/%3E%3Ctext fill=\\'%23ffffff\\' font-family=\\'Arial\\' font-size=\\'24\\' x=\\'50%25\\' y=\\'50%25\\' text-anchor=\\'middle\\'%3EGörsel%20Yüklenemedi%3C/text%3E%3C/svg%3E'; this.alt='Görsel yüklenemedi';"
             class="w-full h-full object-cover cursor-pointer">
+
           <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent cursor-pointer"></div>
           <div class="absolute bottom-0 left-0 right-0 p-8 md:p-12 text-white z-10 cursor-pointer">
             <div class="max-w-6xl mx-auto">
@@ -965,8 +650,11 @@
       
       if (slides.length === 0) return;
 
-      slides.forEach(slide => slide.classList.remove('opacity-100'));
-      slides.forEach(slide => slide.classList.add('opacity-0'));
+      // Tüm slaytları gizle ve tıklamayı kapat
+      slides.forEach(slide => {
+        slide.classList.remove('opacity-100', 'z-10');
+        slide.classList.add('opacity-0', 'z-0', 'pointer-events-none');
+      });
       
       dots.forEach(dot => {
         dot.classList.remove('bg-white', 'w-8');
@@ -977,8 +665,9 @@
       else if (index < 0) currentSlide = slides.length - 1;
       else currentSlide = index;
 
-      slides[currentSlide].classList.remove('opacity-0');
-      slides[currentSlide].classList.add('opacity-100');
+      // Aktif slaytı göster ve tıklamayı aç
+      slides[currentSlide].classList.remove('opacity-0', 'z-0', 'pointer-events-none');
+      slides[currentSlide].classList.add('opacity-100', 'z-10');
       
       if (dots[currentSlide]) {
         dots[currentSlide].classList.remove('bg-white/50');
@@ -1044,73 +733,33 @@
         });
       });
 
-      // Görsellere tıklama event'i ekle
+      // Görsellere tıklama event'i ekle - ayrı sayfaya yönlendir
       const slides = document.querySelectorAll('.gallery-slide');
-      slides.forEach((slide, slideIndex) => {
+      slides.forEach((slide) => {
         slide.addEventListener('click', (e) => {
-          // Navigation butonlarına tıklama durumunda modal açma
+          // Navigation butonlarına tıklama durumunda yönlendirme yapma
           if (e.target.closest('#prev-slide') || e.target.closest('#next-slide') || e.target.closest('.gallery-dot')) {
             return;
           }
-          // Slide index'ini kullanarak sıralanmış görseller dizisinden doğru görseli al
-          openGalleryModalByIndex(slideIndex);
+          // Tıklanan slide'ın data-image-index attribute'unu kullanarak detay sayfasına yönlendir
+          const clickedSlide = e.currentTarget;
+          const imageIndex = clickedSlide.dataset.imageIndex;
+          if (imageIndex !== undefined && imageIndex !== null) {
+            window.location.href = `gallery-detail.html?index=${encodeURIComponent(imageIndex)}`;
+          } else {
+            // Fallback: görünür olan slide'ı bul
+            const visibleSlide = Array.from(slides).find(s => !s.classList.contains('opacity-0'));
+            if (visibleSlide) {
+              const visibleImageIndex = visibleSlide.dataset.imageIndex;
+              if (visibleImageIndex !== undefined && visibleImageIndex !== null) {
+                window.location.href = `gallery-detail.html?index=${encodeURIComponent(visibleImageIndex)}`;
+              }
+            }
+          }
         });
       });
     }
 
-    function openGalleryModalByIndex(index) {
-      const galleryImages = allData.filter(d => d.type === 'gallery').sort((a, b) => (a.gallery_order || 0) - (b.gallery_order || 0));
-      const image = galleryImages[index];
-      
-      if (!image) return;
-
-      const modal = document.getElementById('gallery-modal');
-      const modalTitle = document.getElementById('gallery-modal-title');
-      const modalImage = document.getElementById('gallery-modal-image');
-      const modalDescription = document.getElementById('gallery-modal-description');
-
-      if (modal && modalTitle && modalImage && modalDescription) {
-        modalTitle.textContent = image.gallery_title || 'Başlık Yok';
-        modalImage.src = image.gallery_image_url;
-        modalImage.alt = image.gallery_title || '';
-        modalDescription.textContent = image.gallery_description || 'Açıklama bulunmuyor.';
-        modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden'; // Scroll'u engelle
-        stopSlideShow(); // Slider'ı durdur
-      }
-    }
-
-    // Eski fonksiyon (geriye dönük uyumluluk için)
-    function openGalleryModal(imageId) {
-      const galleryImages = allData.filter(d => d.type === 'gallery').sort((a, b) => (a.gallery_order || 0) - (b.gallery_order || 0));
-      const image = galleryImages.find(img => (img.__backendId || img.id) === imageId);
-      
-      if (!image) return;
-
-      const modal = document.getElementById('gallery-modal');
-      const modalTitle = document.getElementById('gallery-modal-title');
-      const modalImage = document.getElementById('gallery-modal-image');
-      const modalDescription = document.getElementById('gallery-modal-description');
-
-      if (modal && modalTitle && modalImage && modalDescription) {
-        modalTitle.textContent = image.gallery_title || 'Başlık Yok';
-        modalImage.src = image.gallery_image_url;
-        modalImage.alt = image.gallery_title || '';
-        modalDescription.textContent = image.gallery_description || 'Açıklama bulunmuyor.';
-        modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-        stopSlideShow();
-      }
-    }
-
-    function closeGalleryModal() {
-      const modal = document.getElementById('gallery-modal');
-      if (modal) {
-        modal.classList.add('hidden');
-        document.body.style.overflow = ''; // Scroll'u tekrar etkinleştir
-        startSlideShow(); // Slider'ı tekrar başlat
-      }
-    }
 
     function renderSite() {
       const general = allData.find(d => d.type === 'general') || {};
@@ -1270,770 +919,7 @@
       }
     }
 
-    function renderAdminPanel() {
-      const general = allData.find(d => d.type === 'general') || {};
-      const hours = allData.find(d => d.type === 'hours') || {};
-      const doctors = allData.filter(d => d.type === 'doctor');
-      const staff = allData.filter(d => d.type === 'staff');
-      const services = allData.filter(d => d.type === 'service');
-
-      document.getElementById('edit-site-title').value = general.site_title || '';
-      document.getElementById('edit-phone').value = general.phone_number || '';
-      document.getElementById('edit-logo-url').value = general.logo_url || '';
-      document.getElementById('edit-hero-logo-url').value = general.hero_logo_url || '';
-      document.getElementById('edit-about-logo-url').value = general.about_logo_url || '';
-      document.getElementById('edit-hero-title').value = general.hero_title || '';
-      document.getElementById('edit-hero-subtitle').value = general.hero_subtitle || '';
-      document.getElementById('edit-address').value = general.address_text || '';
-      document.getElementById('edit-address-district').value = general.address_district || '';
-      document.getElementById('edit-address-city').value = general.address_city || '';
-      document.getElementById('edit-about-title').value = general.about_title || '';
-      document.getElementById('edit-about-p1').value = general.about_p1 || '';
-      document.getElementById('edit-about-p2').value = general.about_p2 || '';
-      
-      document.getElementById('edit-weekday-hours').value = hours.weekday_hours || '';
-      document.getElementById('edit-saturday-hours').value = hours.saturday_hours || '';
-      document.getElementById('edit-sunday-hours').value = hours.sunday_hours || '';
-
-      const doctorCountEl = document.getElementById('doctor-count');
-      if (doctorCountEl) doctorCountEl.textContent = doctors.length;
-
-      const doctorsList = document.getElementById('doctors-list');
-      doctorsList.innerHTML = doctors.map((doc, idx) => `
-        <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
-          <h4 class="font-semibold text-gray-700 mb-3">Doktor ${idx + 1}</h4>
-          <div class="grid md:grid-cols-3 gap-4">
-            <input type="text" value="${doc.doctor_name || ''}" 
-              class="doctor-name px-3 py-2 border border-gray-300 rounded-lg text-sm" 
-              data-id="${doc.__backendId}" placeholder="Doktor Adı">
-            <input type="text" value="${doc.doctor_title || ''}" 
-              class="doctor-title px-3 py-2 border border-gray-300 rounded-lg text-sm" 
-              data-id="${doc.__backendId}" placeholder="Uzmanlık">
-            <input type="text" value="${doc.doctor_experience || ''}" 
-              class="doctor-experience px-3 py-2 border border-gray-300 rounded-lg text-sm" 
-              data-id="${doc.__backendId}" placeholder="Deneyim">
-          </div>
-          <div class="flex flex-wrap gap-2 mt-3">
-            <button class="save-doctor px-4 py-2 btn-primary focus-ring text-sm font-medium rounded-lg transition-colors" data-id="${doc.__backendId}">
-              Kaydet
-            </button>
-            <button class="delete-doctor px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors" data-id="${doc.__backendId}">
-              Sil
-            </button>
-          </div>
-        </div>
-      `).join('');
-
-      const staffCountEl = document.getElementById('staff-count');
-      if (staffCountEl) staffCountEl.textContent = staff.length;
-
-      const staffList = document.getElementById('staff-list');
-      if (staffList) {
-        staffList.innerHTML = staff.map((person, idx) => `
-          <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
-            <h4 class="font-semibold text-gray-700 mb-3">Personel ${idx + 1}</h4>
-            <div class="grid md:grid-cols-3 gap-4">
-              <input type="text" value="${person.staff_name || ''}" 
-                class="staff-name px-3 py-2 border border-gray-300 rounded-lg text-sm" 
-                data-id="${person.__backendId}" placeholder="Personel Adı">
-              <input type="text" value="${person.staff_title || ''}" 
-                class="staff-title px-3 py-2 border border-gray-300 rounded-lg text-sm" 
-                data-id="${person.__backendId}" placeholder="Görev">
-              <input type="text" value="${person.staff_experience || ''}" 
-                class="staff-experience px-3 py-2 border border-gray-300 rounded-lg text-sm" 
-                data-id="${person.__backendId}" placeholder="Deneyim">
-            </div>
-            <div class="flex flex-wrap gap-2 mt-3">
-              <button class="save-staff px-4 py-2 btn-primary focus-ring text-sm font-medium rounded-lg transition-colors" data-id="${person.__backendId}">
-                Kaydet
-              </button>
-              <button class="delete-staff px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors" data-id="${person.__backendId}">
-                Sil
-              </button>
-            </div>
-          </div>
-        `).join('');
-      }
-
-      const servicesList = document.getElementById('services-list');
-      servicesList.innerHTML = services.map((srv, idx) => `
-        <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
-          <h4 class="font-semibold text-gray-700 mb-3">Hizmet ${idx + 1}</h4>
-          <div class="grid gap-4">
-            <input type="text" value="${srv.service_title || ''}" 
-              class="service-title px-3 py-2 border border-gray-300 rounded-lg text-sm" 
-              data-id="${srv.__backendId}" placeholder="Hizmet Başlığı">
-            <textarea rows="2" class="service-description px-3 py-2 border border-gray-300 rounded-lg text-sm" 
-              data-id="${srv.__backendId}" placeholder="Hizmet Açıklaması">${srv.service_description || ''}</textarea>
-          </div>
-          <button class="save-service mt-3 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium rounded-lg transition-colors" data-id="${srv.__backendId}">
-            Kaydet
-          </button>
-        </div>
-      `).join('');
-
-      const galleryImages = allData.filter(d => d.type === 'gallery').sort((a, b) => (a.gallery_order || 0) - (b.gallery_order || 0));
-      const galleryList = document.getElementById('gallery-list');
-      if (galleryList) {
-        if (galleryImages.length === 0) {
-          galleryList.innerHTML = '<p class="text-gray-500 text-sm text-center py-8">Henüz görsel eklenmemiş. "Yeni Görsel Ekle" butonuna tıklayarak başlayın.</p>';
-        } else {
-          galleryList.innerHTML = galleryImages.map((img, idx) => `
-            <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
-              <div class="flex gap-4">
-                <img src="${img.gallery_image_url}" alt="${img.gallery_title || ''}" loading="lazy"
-                  onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'120\\' height=\\'80\\'%3E%3Crect fill=\\'%23e5e7eb\\' width=\\'120\\' height=\\'80\\'/%3E%3Ctext fill=\\'%239ca3af\\' font-family=\\'Arial\\' font-size=\\'12\\' x=\\'50%25\\' y=\\'50%25\\' text-anchor=\\'middle\\'%3EHata%3C/text%3E%3C/svg%3E';"
-                  class="w-32 h-24 object-cover rounded-lg flex-shrink-0">
-                <div class="flex-1 min-w-0">
-                  <h4 class="font-semibold text-gray-700 mb-2">Görsel ${idx + 1}</h4>
-                  <input type="url" value="${img.gallery_image_url || ''}" 
-                    class="gallery-url w-full px-3 py-2 border border-gray-300 rounded-lg text-sm mb-2" 
-                    data-id="${img.__backendId}" placeholder="Görsel URL">
-                  <input type="text" value="${img.gallery_title || ''}" 
-                    class="gallery-title w-full px-3 py-2 border border-gray-300 rounded-lg text-sm mb-2" 
-                    data-id="${img.__backendId}" placeholder="Başlık">
-                  <textarea rows="2" class="gallery-description w-full px-3 py-2 border border-gray-300 rounded-lg text-sm mb-2" 
-                    data-id="${img.__backendId}" placeholder="Açıklama">${img.gallery_description || ''}</textarea>
-                  <div class="flex gap-2">
-                    <button class="save-gallery px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-colors" data-id="${img.__backendId}">
-                      Kaydet
-                    </button>
-                    <button class="delete-gallery px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors" data-id="${img.__backendId}">
-                      Sil
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          `).join('');
-        }
-      }
-
-      attachAdminEventListeners();
-    }
-
-    function attachAdminEventListeners() {
-      const addGalleryBtn = document.getElementById('add-gallery-image-btn');
-      const addGalleryForm = document.getElementById('add-gallery-form');
-      const cancelGalleryBtn = document.getElementById('cancel-gallery-btn');
-      const newGalleryForm = document.getElementById('new-gallery-form');
-      const doctorColors = ['from-sky-400 to-sky-600', 'from-emerald-400 to-emerald-600', 'from-amber-400 to-amber-600', 'from-rose-400 to-rose-600', 'from-indigo-400 to-indigo-600'];
-      const passwordForm = document.getElementById('password-form');
-
-      if (addGalleryBtn) {
-        addGalleryBtn.replaceWith(addGalleryBtn.cloneNode(true));
-        document.getElementById('add-gallery-image-btn').addEventListener('click', () => {
-          addGalleryForm.classList.remove('hidden');
-          document.getElementById('new-gallery-url').value = '';
-          document.getElementById('new-gallery-title').value = '';
-          document.getElementById('new-gallery-description').value = '';
-          document.getElementById('image-preview-container').classList.add('hidden');
-        });
-      }
-
-      const newGalleryUrlInput = document.getElementById('new-gallery-url');
-      if (newGalleryUrlInput) {
-        newGalleryUrlInput.replaceWith(newGalleryUrlInput.cloneNode(true));
-        document.getElementById('new-gallery-url').addEventListener('input', (e) => {
-          const url = e.target.value.trim();
-          const previewContainer = document.getElementById('image-preview-container');
-          const previewImg = document.getElementById('image-preview');
-          const previewLoading = document.getElementById('preview-loading');
-          
-          if (url && url.startsWith('https://')) {
-            previewContainer.classList.remove('hidden');
-            previewLoading.classList.remove('hidden');
-            
-            previewImg.src = url;
-            
-            previewImg.onload = () => {
-              previewLoading.classList.add('hidden');
-            };
-            
-            previewImg.onerror = () => {
-              previewImg.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%23fee2e2' width='400' height='300'/%3E%3Ctext fill='%23dc2626' font-family='Arial' font-size='16' x='50%25' y='45%25' text-anchor='middle'%3E❌ Görsel Yüklenemedi%3C/text%3E%3Ctext fill='%23dc2626' font-family='Arial' font-size='12' x='50%25' y='55%25' text-anchor='middle'%3EURL doğru formatta değil%3C/text%3E%3C/svg%3E";
-              previewImg.alt = 'Görsel yüklenemedi';
-              previewLoading.classList.add('hidden');
-            };
-          } else {
-            previewContainer.classList.add('hidden');
-          }
-        });
-      }
-
-      if (cancelGalleryBtn) {
-        cancelGalleryBtn.replaceWith(cancelGalleryBtn.cloneNode(true));
-        document.getElementById('cancel-gallery-btn').addEventListener('click', () => {
-          addGalleryForm.classList.add('hidden');
-        });
-      }
-
-      const newGalleryFormElement = document.getElementById('new-gallery-form');
-      if (newGalleryFormElement) {
-        const newForm = newGalleryFormElement.cloneNode(true);
-        newGalleryFormElement.replaceWith(newForm);
-        
-        newForm.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          
-          const galleryImages = allData.filter(d => d.type === 'gallery');
-          if (galleryImages.length >= 10) {
-            showToast('Maksimum 10 görsel ekleyebilirsiniz!', 'error');
-            return;
-          }
-
-          const submitBtn = newForm.querySelector('button[type="submit"]');
-          submitBtn.disabled = true;
-          submitBtn.innerHTML = '<div class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div> Ekleniyor...';
-
-          const result = await window.dataSdk.create({
-            id: 'gallery-' + Date.now(),
-            type: 'gallery',
-            gallery_image_url: newForm.querySelector('#new-gallery-url').value,
-            gallery_title: newForm.querySelector('#new-gallery-title').value,
-            gallery_description: newForm.querySelector('#new-gallery-description').value,
-            gallery_order: galleryImages.length
-          });
-
-          if (result.isOk) {
-            showToast('Görsel başarıyla eklendi!', 'success');
-            document.getElementById('add-gallery-form').classList.add('hidden');
-            newForm.reset();
-          } else {
-            showToast('Görsel eklenirken hata oluştu!', 'error');
-          }
-
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = 'Kaydet';
-        });
-      }
-
-      document.querySelectorAll('.save-gallery').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-          const id = e.target.dataset.id;
-          const galleryImage = allData.find(d => d.__backendId === id);
-          if (!galleryImage) return;
-
-          const urlInput = document.querySelector(`.gallery-url[data-id="${id}"]`);
-          const titleInput = document.querySelector(`.gallery-title[data-id="${id}"]`);
-          const descInput = document.querySelector(`.gallery-description[data-id="${id}"]`);
-
-          btn.disabled = true;
-          btn.innerHTML = '<div class="inline-block w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>';
-
-          const result = await window.dataSdk.update({
-            ...galleryImage,
-            gallery_image_url: urlInput.value,
-            gallery_title: titleInput.value,
-            gallery_description: descInput.value
-          });
-
-          if (result.isOk) {
-            btn.innerHTML = '✓';
-            setTimeout(() => {
-              btn.disabled = false;
-              btn.innerHTML = 'Kaydet';
-            }, 2000);
-          } else {
-            btn.innerHTML = '✗';
-            btn.disabled = false;
-            showToast('Kaydetme hatası!', 'error');
-          }
-        });
-      });
-
-      document.querySelectorAll('.delete-gallery').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-          const id = e.target.dataset.id;
-          const galleryImage = allData.find(d => d.__backendId === id);
-          if (!galleryImage) return;
-
-          btn.disabled = true;
-          btn.innerHTML = '<div class="inline-block w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>';
-
-          const result = await window.dataSdk.delete(galleryImage);
-
-          if (result.isOk) {
-            showToast('Görsel silindi!', 'success');
-          } else {
-            btn.innerHTML = 'Sil';
-            btn.disabled = false;
-            showToast('Silme hatası!', 'error');
-          }
-        });
-      });
-
-      document.querySelectorAll('.save-doctor').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-          const id = e.target.dataset.id;
-          const doctor = allData.find(d => d.__backendId === id);
-          if (!doctor) return;
-
-          const nameInput = document.querySelector(`.doctor-name[data-id="${id}"]`);
-          const titleInput = document.querySelector(`.doctor-title[data-id="${id}"]`);
-          const expInput = document.querySelector(`.doctor-experience[data-id="${id}"]`);
-
-          btn.disabled = true;
-          btn.innerHTML = '<div class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div> Kaydediliyor...';
-
-          const result = await window.dataSdk.update({
-            ...doctor,
-            doctor_name: nameInput.value,
-            doctor_title: titleInput.value,
-            doctor_experience: expInput.value
-          });
-
-          if (result.isOk) {
-            btn.innerHTML = '✓ Kaydedildi';
-            setTimeout(() => {
-              btn.disabled = false;
-              btn.innerHTML = 'Kaydet';
-            }, 2000);
-          } else {
-            btn.innerHTML = '✗ Hata';
-            btn.disabled = false;
-            showToast('Kaydetme hatası!', 'error');
-          }
-        });
-      });
-
-      document.querySelectorAll('.save-service').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-          const id = e.target.dataset.id;
-          const service = allData.find(d => d.__backendId === id);
-          if (!service) return;
-
-          const titleInput = document.querySelector(`.service-title[data-id="${id}"]`);
-          const descInput = document.querySelector(`.service-description[data-id="${id}"]`);
-
-          btn.disabled = true;
-          btn.innerHTML = '<div class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div> Kaydediliyor...';
-
-          const result = await window.dataSdk.update({
-            ...service,
-            service_title: titleInput.value,
-            service_description: descInput.value
-          });
-
-          if (result.isOk) {
-            btn.innerHTML = '✓ Kaydedildi';
-            setTimeout(() => {
-              btn.disabled = false;
-              btn.innerHTML = 'Kaydet';
-            }, 2000);
-          } else {
-            btn.innerHTML = '✗ Hata';
-            btn.disabled = false;
-            showToast('Kaydetme hatası!', 'error');
-          }
-        });
-      });
-
-      document.querySelectorAll('.delete-doctor').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-          const id = e.target.dataset.id;
-          const doctor = allData.find(d => d.__backendId === id);
-          if (!doctor) return;
-
-          btn.disabled = true;
-          btn.innerHTML = '<div class="inline-block w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>';
-
-          const result = await window.dataSdk.delete(doctor);
-          if (result.isOk) {
-            showToast('Doktor silindi!', 'success');
-          } else {
-            btn.disabled = false;
-            btn.innerHTML = 'Sil';
-            showToast('Silme hatası!', 'error');
-          }
-        });
-      });
-
-      const addDoctorBtn = document.getElementById('add-doctor-btn');
-      const addDoctorForm = document.getElementById('add-doctor-form');
-      const newDoctorForm = document.getElementById('new-doctor-form');
-      const cancelDoctorBtn = document.getElementById('cancel-doctor-btn');
-
-      if (addDoctorBtn && addDoctorForm) {
-        addDoctorBtn.replaceWith(addDoctorBtn.cloneNode(true));
-        document.getElementById('add-doctor-btn').addEventListener('click', () => {
-          addDoctorForm.classList.toggle('hidden');
-          if (!addDoctorForm.classList.contains('hidden')) {
-            document.getElementById('new-doctor-name').focus();
-          }
-        });
-      }
-
-      if (cancelDoctorBtn && addDoctorForm) {
-        cancelDoctorBtn.replaceWith(cancelDoctorBtn.cloneNode(true));
-        document.getElementById('cancel-doctor-btn').addEventListener('click', () => {
-          addDoctorForm.classList.add('hidden');
-          document.getElementById('new-doctor-form').reset();
-        });
-      }
-
-      if (newDoctorForm) {
-        const clonedForm = newDoctorForm.cloneNode(true);
-        newDoctorForm.replaceWith(clonedForm);
-
-        clonedForm.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const submitBtn = clonedForm.querySelector('button[type="submit"]');
-          submitBtn.disabled = true;
-          submitBtn.innerHTML = '<div class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>Ekle';
-
-          const doctors = allData.filter(d => d.type === 'doctor');
-          const color = doctorColors[doctors.length % doctorColors.length];
-
-          const result = await window.dataSdk.create({
-            id: 'doctor-' + Date.now(),
-            type: 'doctor',
-            doctor_name: clonedForm.querySelector('#new-doctor-name').value,
-            doctor_title: clonedForm.querySelector('#new-doctor-title').value,
-            doctor_experience: clonedForm.querySelector('#new-doctor-exp').value,
-            doctor_color: color
-          });
-
-          if (result.isOk) {
-            showToast('Doktor eklendi!', 'success');
-            clonedForm.reset();
-            addDoctorForm.classList.add('hidden');
-          } else {
-            showToast('Ekleme hatası!', 'error');
-          }
-
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = 'Ekle';
-        });
-      }
-
-      document.querySelectorAll('.save-staff').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-          const id = e.target.dataset.id;
-          const staff = allData.find(d => d.__backendId === id);
-          if (!staff) return;
-
-          const nameInput = document.querySelector(`.staff-name[data-id="${id}"]`);
-          const titleInput = document.querySelector(`.staff-title[data-id="${id}"]`);
-          const expInput = document.querySelector(`.staff-experience[data-id="${id}"]`);
-
-          btn.disabled = true;
-          btn.innerHTML = '<div class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div> Kaydediliyor...';
-
-          const result = await window.dataSdk.update({
-            ...staff,
-            staff_name: nameInput.value,
-            staff_title: titleInput.value,
-            staff_experience: expInput.value
-          });
-
-          if (result.isOk) {
-            btn.innerHTML = '✓ Kaydedildi';
-            setTimeout(() => {
-              btn.disabled = false;
-              btn.innerHTML = 'Kaydet';
-            }, 2000);
-          } else {
-            btn.innerHTML = '✗ Hata';
-            btn.disabled = false;
-            showToast('Kaydetme hatası!', 'error');
-          }
-        });
-      });
-
-      document.querySelectorAll('.delete-staff').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-          const id = e.target.dataset.id;
-          const staff = allData.find(d => d.__backendId === id);
-          if (!staff) return;
-
-          btn.disabled = true;
-          btn.innerHTML = '<div class="inline-block w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>';
-
-          const result = await window.dataSdk.delete(staff);
-          if (result.isOk) {
-            showToast('Personel silindi!', 'success');
-          } else {
-            btn.disabled = false;
-            btn.innerHTML = 'Sil';
-            showToast('Silme hatası!', 'error');
-          }
-        });
-      });
-
-      const addStaffBtn = document.getElementById('add-staff-btn');
-      const addStaffForm = document.getElementById('add-staff-form');
-      const newStaffForm = document.getElementById('new-staff-form');
-      const cancelStaffBtn = document.getElementById('cancel-staff-btn');
-
-      if (addStaffBtn && addStaffForm) {
-        addStaffBtn.replaceWith(addStaffBtn.cloneNode(true));
-        document.getElementById('add-staff-btn').addEventListener('click', () => {
-          addStaffForm.classList.toggle('hidden');
-          if (!addStaffForm.classList.contains('hidden')) {
-            document.getElementById('new-staff-name').focus();
-          }
-        });
-      }
-
-      if (cancelStaffBtn && addStaffForm) {
-        cancelStaffBtn.replaceWith(cancelStaffBtn.cloneNode(true));
-        document.getElementById('cancel-staff-btn').addEventListener('click', () => {
-          addStaffForm.classList.add('hidden');
-          document.getElementById('new-staff-form').reset();
-        });
-      }
-
-      if (newStaffForm) {
-        const clonedStaffForm = newStaffForm.cloneNode(true);
-        newStaffForm.replaceWith(clonedStaffForm);
-
-        clonedStaffForm.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const submitBtn = clonedStaffForm.querySelector('button[type="submit"]');
-          submitBtn.disabled = true;
-          submitBtn.innerHTML = '<div class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>Ekle';
-
-          const staffs = allData.filter(d => d.type === 'staff');
-          const color = doctorColors[staffs.length % doctorColors.length];
-
-          const result = await window.dataSdk.create({
-            id: 'staff-' + Date.now(),
-            type: 'staff',
-            staff_name: clonedStaffForm.querySelector('#new-staff-name').value,
-            staff_title: clonedStaffForm.querySelector('#new-staff-title').value,
-            staff_experience: clonedStaffForm.querySelector('#new-staff-exp').value,
-            staff_color: color
-          });
-
-          if (result.isOk) {
-            showToast('Personel eklendi!', 'success');
-            clonedStaffForm.reset();
-            addStaffForm.classList.add('hidden');
-          } else {
-            showToast('Ekleme hatası!', 'error');
-          }
-
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = 'Ekle';
-        });
-      }
-
-      if (passwordForm) {
-        const clonedPasswordForm = passwordForm.cloneNode(true);
-        passwordForm.replaceWith(clonedPasswordForm);
-
-        clonedPasswordForm.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const adminCred = allData.find(d => d.type === 'admin');
-          if (!adminCred) {
-            showToast('Admin kaydı bulunamadı!', 'error');
-            return;
-          }
-
-          const current = document.getElementById('current-password')?.value || '';
-          const next = document.getElementById('new-password')?.value || '';
-          const next2 = document.getElementById('new-password-2')?.value || '';
-
-          if (!current || !next || !next2) {
-            showToast('Lütfen tüm alanları doldurun!', 'error');
-            return;
-          }
-          if (next !== next2) {
-            showToast('Yeni şifreler eşleşmiyor!', 'error');
-            return;
-          }
-          if (next.length < 6) {
-            showToast('Şifre en az 6 karakter olmalı!', 'error');
-            return;
-          }
-
-          const ok = await verifyAdminPassword(adminCred, current);
-          if (!ok) {
-            showToast('Mevcut şifre hatalı!', 'error');
-            return;
-          }
-
-          const submitBtn = clonedPasswordForm.querySelector('button[type="submit"]');
-          submitBtn.disabled = true;
-          submitBtn.innerHTML = '<div class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div> Değiştiriliyor...';
-
-          if (!(window.crypto && window.crypto.subtle && window.TextEncoder)) {
-            showToast('Güvenli kripto desteği yok. HTTPS üzerinde deneyin.', 'error');
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = 'Şifreyi Değiştir';
-            return;
-          }
-
-          const saltBytes = new Uint8Array(16);
-          crypto.getRandomValues(saltBytes);
-          const saltB64 = arrayBufferToBase64(saltBytes.buffer);
-          const iter = 150000;
-          const hashB64 = await pbkdf2HashBase64(next, saltB64, iter);
-
-          const payload = { ...adminCred, password_iter: iter, password_salt_b64: saltB64, password_hash_b64: hashB64 };
-          delete payload.password;
-          const result = await window.dataSdk.update(payload);
-
-          if (result.isOk) {
-            showToast('Şifre değiştirildi!', 'success');
-            clonedPasswordForm.reset();
-          } else {
-            showToast('Şifre değiştirilemedi!', 'error');
-          }
-
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = 'Şifreyi Değiştir';
-        });
-      }
-
-      // Kurtarma kodları
-      const generateRecoveryBtn = document.getElementById('generate-recovery-btn');
-      const recoveryCodesBox = document.getElementById('recovery-codes-box');
-      const recoveryCodesOutput = document.getElementById('recovery-codes-output');
-      const recoveryCodesCopied = document.getElementById('recovery-codes-copied');
-      const recoveryStatus = document.getElementById('recovery-status');
-
-      const updateRecoveryStatus = () => {
-        const adminCred = allData.find(d => d.type === 'admin');
-        const count = adminCred?.recovery_hashes?.length || 0;
-        if (recoveryStatus) {
-          recoveryStatus.textContent = count > 0 ? `${count} adet kurtarma kodu aktif.` : 'Kurtarma kodu yok. Oluşturmanız önerilir.';
-        }
-      };
-      updateRecoveryStatus();
-
-      if (generateRecoveryBtn) {
-        generateRecoveryBtn.replaceWith(generateRecoveryBtn.cloneNode(true));
-        document.getElementById('generate-recovery-btn').addEventListener('click', async () => {
-          const adminCred = allData.find(d => d.type === 'admin');
-          if (!adminCred) {
-            showToast('Admin kaydı bulunamadı!', 'error');
-            return;
-          }
-          if (!(window.crypto && window.crypto.subtle && window.TextEncoder)) {
-            showToast('Güvenli kripto desteği yok. HTTPS üzerinde deneyin.', 'error');
-            return;
-          }
-
-          const codes = Array.from({ length: 8 }).map(() => {
-            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-            const bytes = new Uint8Array(8);
-            crypto.getRandomValues(bytes);
-            let s = '';
-            for (let i = 0; i < bytes.length; i++) s += chars[bytes[i] % chars.length];
-            return `${s.slice(0, 4)}-${s.slice(4, 8)}`;
-          });
-
-          const saltBytes = new Uint8Array(16);
-          crypto.getRandomValues(saltBytes);
-          const saltB64 = arrayBufferToBase64(saltBytes.buffer);
-          const hashes = [];
-          for (const c of codes) {
-            hashes.push(await sha256Base64(`${saltB64}:${c}`));
-          }
-
-          const payload = { ...adminCred, recovery_salt_b64: saltB64, recovery_hashes: hashes };
-          delete payload.password;
-          const result = await window.dataSdk.update(payload);
-
-          if (!result.isOk) {
-            showToast('Kurtarma kodları kaydedilemedi!', 'error');
-            return;
-          }
-
-          if (recoveryCodesOutput) recoveryCodesOutput.value = codes.join('\n');
-          if (recoveryCodesBox) recoveryCodesBox.classList.remove('hidden');
-          showToast('Kurtarma kodları oluşturuldu. Lütfen kopyalayın!', 'success');
-          updateRecoveryStatus();
-        });
-      }
-
-      if (recoveryCodesCopied) {
-        recoveryCodesCopied.replaceWith(recoveryCodesCopied.cloneNode(true));
-        document.getElementById('recovery-codes-copied').addEventListener('click', () => {
-          if (recoveryCodesBox) recoveryCodesBox.classList.add('hidden');
-          if (recoveryCodesOutput) recoveryCodesOutput.value = '';
-        });
-      }
-    }
-
-    function showToast(message, type = 'success') {
-      const toast = document.createElement('div');
-      toast.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg text-white ${type === 'success' ? 'bg-emerald-600' : 'bg-red-600'} z-50`;
-      toast.textContent = message;
-      document.body.appendChild(toast);
-      setTimeout(() => toast.remove(), 3000);
-    }
-
-    function arrayBufferToBase64(buffer) {
-      const bytes = new Uint8Array(buffer);
-      let binary = '';
-      for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-      return btoa(binary);
-    }
-
-    function base64ToArrayBuffer(base64) {
-      const binary = atob(base64);
-      const bytes = new Uint8Array(binary.length);
-      for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-      return bytes.buffer;
-    }
-
-    async function pbkdf2HashBase64(password, saltB64, iterations) {
-      if (!(window.crypto && window.crypto.subtle && window.TextEncoder)) throw new Error('NO_WEBCRYPTO');
-      const enc = new TextEncoder();
-      const key = await crypto.subtle.importKey(
-        'raw',
-        enc.encode(password),
-        { name: 'PBKDF2' },
-        false,
-        ['deriveBits']
-      );
-
-      const bits = await crypto.subtle.deriveBits(
-        {
-          name: 'PBKDF2',
-          salt: base64ToArrayBuffer(saltB64),
-          iterations,
-          hash: 'SHA-256'
-        },
-        key,
-        256
-      );
-
-      return arrayBufferToBase64(bits);
-    }
-
-    async function verifyAdminPassword(adminCred, password) {
-      const salt = adminCred?.password_salt_b64;
-      const hash = adminCred?.password_hash_b64;
-      const iter = adminCred?.password_iter ?? 150000;
-      if (!salt || !hash) return false;
-      try {
-        const computed = await pbkdf2HashBase64(password, salt, iter);
-        return computed === hash;
-      } catch {
-        return false;
-      }
-    }
-
-    async function sha256Base64(message) {
-      if (!(window.crypto && window.crypto.subtle && window.TextEncoder)) throw new Error('NO_WEBCRYPTO');
-      const enc = new TextEncoder();
-      const digest = await crypto.subtle.digest('SHA-256', enc.encode(message));
-      return arrayBufferToBase64(digest);
-    }
-
-    async function verifyRecoveryCode(adminCred, code) {
-      const salt = adminCred?.recovery_salt_b64;
-      const hashes = adminCred?.recovery_hashes;
-      if (!salt || !Array.isArray(hashes) || hashes.length === 0) return { ok: false };
-      const normalized = (code || '').trim().toUpperCase();
-      const h = await sha256Base64(`${salt}:${normalized}`);
-      const idx = hashes.indexOf(h);
-      return { ok: idx !== -1, hash: h };
-    }
+    // Admin panel fonksiyonları kaldırıldı
 
     async function initializeDefaultData() {
       const defaultData = [
@@ -2120,16 +1006,6 @@
           service_color: 'bg-teal-100'
         },
         {
-          id: 'admin-credentials',
-          type: 'admin',
-          username: 'admin',
-          password_iter: 150000,
-          password_salt_b64: 'Pn4wvK3rhN8XdlpV3iUJbA==',
-          password_hash_b64: '2WEVqM3q+I7K42p/0Z4MtYi3iH12raIqE1zWJXc+lT4=',
-          recovery_salt_b64: 'v/Z+9j9W6gvjTigB8MwxUQ==',
-          recovery_hashes: ['lor/CAYxbu5EJqxK10LZSwn79ehvIHor5nkCT8IbbM0=', 'L5Y9ikz22Mg0P/dys+6D4zA0EspTJXgLtaiFXEKArBo=', 'NmZA8I8jLBTppxla8Uhp1lRHfjMIoFOypQAqkqDikFA=', 'A52rdUGqXgd+zTvlb0IhOMKkJkTGU6BQD2or1fNCIwI=', 'N5X/SvwIoEG84vu7MYKsogvMeQ279cDQkuJf7HHS+WU=', 'JBH3li0hQLQV29MoGkjermDS05tmbXL5d8Pj3UqTOY8=', 'E3QEmWuBStaRuxBDHjkl1RG2QZaPrlThNehQxZPQ9SQ=', 'b4A13tDZb6oU4x4ZxGDOkSURaziu7MnnGYYw2xIzCm8=']
-        },
-        {
           id: 'gallery-1769032644644',
           type: 'gallery',
           gallery_image_url: 'https://www.oglenogren.tv/img/asmsitesi/haberler/3_haber_ty47868.jpg',
@@ -2160,264 +1036,7 @@
       }
     }
 
-    document.getElementById('login-form')?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-      const loginBtn = document.getElementById('login-btn');
-      const loginError = document.getElementById('login-error');
-
-      loginBtn.disabled = true;
-      loginBtn.innerHTML = '<div class="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div> Giriş yapılıyor...';
-
-      const adminCred = allData.find(d => d.type === 'admin');
-      const isValid = !!(adminCred && username === adminCred.username && await verifyAdminPassword(adminCred, password));
-      
-      if (isValid) {
-        isLoggedIn = true;
-        document.getElementById('login-screen').classList.add('hidden');
-        document.getElementById('admin-panel').classList.remove('hidden');
-        document.getElementById('main-site').classList.add('hidden');
-        
-        document.getElementById('admin-loading').classList.remove('hidden');
-        document.getElementById('admin-content').classList.add('hidden');
-        
-        setTimeout(() => {
-          document.getElementById('admin-loading').classList.add('hidden');
-          document.getElementById('admin-content').classList.remove('hidden');
-          renderAdminPanel();
-        }, 500);
-      } else {
-        loginError.classList.remove('hidden');
-        loginBtn.disabled = false;
-        loginBtn.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg> Giriş Yap';
-      }
-    });
-
-    document.getElementById('forgot-password-link')?.addEventListener('click', () => {
-      document.getElementById('password-reset-panel')?.classList.toggle('hidden');
-    });
-
-    document.getElementById('cancel-reset-btn')?.addEventListener('click', () => {
-      document.getElementById('password-reset-panel')?.classList.add('hidden');
-    });
-
-    document.getElementById('password-reset-form')?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const username = document.getElementById('reset-username')?.value?.trim();
-      const code = document.getElementById('reset-code')?.value?.trim();
-      const p1 = document.getElementById('reset-new-password')?.value || '';
-      const p2 = document.getElementById('reset-new-password-2')?.value || '';
-
-      if (!username || !code || !p1 || !p2) {
-        showToast('Lütfen tüm alanları doldurun!', 'error');
-        return;
-      }
-      if (p1 !== p2) {
-        showToast('Yeni şifreler eşleşmiyor!', 'error');
-        return;
-      }
-      if (p1.length < 6) {
-        showToast('Şifre en az 6 karakter olmalı!', 'error');
-        return;
-      }
-
-      const adminCred = allData.find(d => d.type === 'admin');
-      if (!adminCred || adminCred.username !== username) {
-        showToast('Kullanıcı bulunamadı!', 'error');
-        return;
-      }
-
-      if (!(window.crypto && window.crypto.subtle && window.TextEncoder)) {
-        showToast('Güvenli kripto desteği yok. HTTPS üzerinde deneyin.', 'error');
-        return;
-      }
-
-      let v;
-      try {
-        v = await verifyRecoveryCode(adminCred, code);
-      } catch {
-        showToast('Kurtarma doğrulaması yapılamadı!', 'error');
-        return;
-      }
-      if (!v.ok) {
-        showToast('Kurtarma kodu hatalı!', 'error');
-        return;
-      }
-
-      const saltBytes = new Uint8Array(16);
-      crypto.getRandomValues(saltBytes);
-      const saltB64 = arrayBufferToBase64(saltBytes.buffer);
-      const iter = 150000;
-      const hashB64 = await pbkdf2HashBase64(p1, saltB64, iter);
-
-      const newRecoveryHashes = (adminCred.recovery_hashes || []).filter(h => h !== v.hash);
-      const payload = {
-        ...adminCred,
-        password_iter: iter,
-        password_salt_b64: saltB64,
-        password_hash_b64: hashB64,
-        recovery_hashes: newRecoveryHashes
-      };
-      delete payload.password;
-
-      const result = await window.dataSdk.update(payload);
-      if (result.isOk) {
-        showToast('Şifre sıfırlandı! Giriş yapabilirsiniz.', 'success');
-        document.getElementById('password-reset-panel')?.classList.add('hidden');
-        document.getElementById('password-reset-form')?.reset();
-      } else {
-        showToast('Şifre sıfırlanamadı!', 'error');
-      }
-    });
-
-    document.getElementById('back-to-site')?.addEventListener('click', () => {
-      document.getElementById('login-screen').classList.add('hidden');
-      document.getElementById('main-site').classList.remove('hidden');
-    });
-
-    document.getElementById('admin-login-link')?.addEventListener('click', () => {
-      document.getElementById('main-site').classList.add('hidden');
-      document.getElementById('login-screen').classList.remove('hidden');
-    });
-
-    document.getElementById('publish-changes-btn')?.addEventListener('click', async () => {
-      try {
-        const btn = document.getElementById('publish-changes-btn');
-        const originalText = btn.innerHTML;
-        btn.disabled = true;
-        btn.innerHTML = '<div class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div> Yayınlanıyor...';
-
-        const data = localStorage.getItem('asm_website_data');
-        if (!data) {
-          showToast('Yayınlanacak veri bulunamadı!', 'error');
-          btn.disabled = false;
-          btn.innerHTML = originalText;
-          return;
-        }
-
-        // Cloudflare API'ye kaydet (eğer varsa)
-        const apiSuccess = await saveToAPI(JSON.parse(data));
-        
-        if (apiSuccess) {
-          showToast('Değişiklikler anında yayınlandı! Tüm ziyaretçiler için görünür.', 'success');
-        } else {
-          // API yoksa, export et ve kullanıcıya talimat ver
-          const blob = new Blob([data], { type: 'application/json' });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `asm-website-data-${new Date().toISOString().split('T')[0]}.json`;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-          showToast('Değişiklikler export edildi! JSON dosyasını bana gönderin, GitHub\'a push edeceğim.', 'success');
-        }
-
-        btn.disabled = false;
-        btn.innerHTML = originalText;
-      } catch (error) {
-        showToast('Yayınlama hatası: ' + error.message, 'error');
-        document.getElementById('publish-changes-btn').disabled = false;
-      }
-    });
-
-    document.getElementById('export-changes-btn')?.addEventListener('click', () => {
-      try {
-        const data = localStorage.getItem('asm_website_data');
-        if (!data) {
-          showToast('Export edilecek veri bulunamadı!', 'error');
-          return;
-        }
-        const blob = new Blob([data], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `asm-website-data-${new Date().toISOString().split('T')[0]}.json`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        showToast('Değişiklikler export edildi! JSON dosyasını GitHub\'a yüklemek için bana gönderin.', 'success');
-      } catch (error) {
-        showToast('Export hatası: ' + error.message, 'error');
-      }
-    });
-
-    document.getElementById('view-site-btn')?.addEventListener('click', () => {
-      document.getElementById('admin-panel').classList.add('hidden');
-      document.getElementById('main-site').classList.remove('hidden');
-    });
-
-    document.getElementById('logout-btn')?.addEventListener('click', () => {
-      isLoggedIn = false;
-      document.getElementById('admin-panel').classList.add('hidden');
-      document.getElementById('main-site').classList.remove('hidden');
-      showToast('Çıkış yapıldı', 'success');
-    });
-
-    document.getElementById('general-form')?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const general = allData.find(d => d.type === 'general');
-      if (!general) return;
-
-      const submitBtn = e.target.querySelector('button[type="submit"]');
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<div class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div> Kaydediliyor...';
-
-      const result = await window.dataSdk.update({
-        ...general,
-        site_title: document.getElementById('edit-site-title').value,
-        hero_title: document.getElementById('edit-hero-title').value,
-        hero_subtitle: document.getElementById('edit-hero-subtitle').value,
-        phone_number: document.getElementById('edit-phone').value,
-        address_text: document.getElementById('edit-address').value,
-        address_district: document.getElementById('edit-address-district').value,
-        address_city: document.getElementById('edit-address-city').value,
-        logo_url: document.getElementById('edit-logo-url').value,
-        hero_logo_url: document.getElementById('edit-hero-logo-url').value,
-        about_logo_url: document.getElementById('edit-about-logo-url').value,
-        about_title: document.getElementById('edit-about-title').value,
-        about_p1: document.getElementById('edit-about-p1').value,
-        about_p2: document.getElementById('edit-about-p2').value
-      });
-
-      if (result.isOk) {
-        showToast('Genel bilgiler kaydedildi!', 'success');
-      } else {
-        showToast('Kaydetme hatası!', 'error');
-      }
-
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = 'Kaydet';
-    });
-
-    document.getElementById('hours-form')?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const hours = allData.find(d => d.type === 'hours');
-      if (!hours) return;
-
-      const submitBtn = e.target.querySelector('button[type="submit"]');
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<div class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div> Kaydediliyor...';
-
-      const result = await window.dataSdk.update({
-        ...hours,
-        weekday_hours: document.getElementById('edit-weekday-hours').value,
-        saturday_hours: document.getElementById('edit-saturday-hours').value,
-        sunday_hours: document.getElementById('edit-sunday-hours').value
-      });
-
-      if (result.isOk) {
-        showToast('Çalışma saatleri kaydedildi!', 'success');
-      } else {
-        showToast('Kaydetme hatası!', 'error');
-      }
-
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = 'Kaydet';
-    });
+    // Admin panel event listener'ları kaldırıldı
 
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -2451,49 +1070,9 @@
           await initializeDefaultData();
         }
 
-        // Legacy migration: düz metin admin şifresi varsa hash'e çevir
-        const adminCred = allData.find(d => d.type === 'admin');
-        if (adminCred && adminCred.password && (!adminCred.password_hash_b64 || !adminCred.password_salt_b64)) {
-          const saltBytes = new Uint8Array(16);
-          crypto.getRandomValues(saltBytes);
-          const saltB64 = arrayBufferToBase64(saltBytes.buffer);
-          const iter = 150000;
-          const hashB64 = await pbkdf2HashBase64(adminCred.password, saltB64, iter);
-          const payload = { ...adminCred, password_iter: iter, password_salt_b64: saltB64, password_hash_b64: hashB64 };
-          delete payload.password;
-          await window.dataSdk.update(payload);
-        }
       }
 
-      // Modal event listener'larını başlat
-      setupGalleryModalListeners();
-    }
-
-    function setupGalleryModalListeners() {
-      // Modal kapatma event listener'ları
-      const closeBtn = document.getElementById('close-gallery-modal');
-      const modal = document.getElementById('gallery-modal');
-      
-      if (closeBtn) {
-        closeBtn.addEventListener('click', closeGalleryModal);
-      }
-      
-      if (modal) {
-        modal.addEventListener('click', (e) => {
-          if (e.target.id === 'gallery-modal') {
-            closeGalleryModal();
-          }
-        });
-      }
-      
-      // ESC tuşu ile kapatma
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          if (modal && !modal.classList.contains('hidden')) {
-            closeGalleryModal();
-          }
-        }
-      });
+      renderSite();
     }
 
     if (window.elementSdk) {

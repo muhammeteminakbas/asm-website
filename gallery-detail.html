@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="tr" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galeri Detay - Taşkent Merkez Aile Sağlığı Merkezi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0284c7;
+      --secondary: #10b981;
+      --text: #1f2937;
+      --bg: #ffffff;
+      --surface: #f9fafb;
+    }
+
+    body {
+      box-sizing: border-box;
+      font-family: 'Source Sans 3', sans-serif;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    .scroll-smooth {
+      scroll-behavior: smooth;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(0.95);
+    }
+
+    .btn-secondary {
+      background: var(--secondary);
+      color: #fff;
+    }
+
+    .btn-secondary:hover {
+      filter: brightness(0.95);
+    }
+
+    .focus-ring:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+  </style>
+ </head>
+ <body class="h-full bg-white text-gray-800">
+  <div id="app-wrapper" class="w-full h-full overflow-auto scroll-smooth">
+   <!-- Header -->
+   <header id="main-header" class="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-3">
+     <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+       <a href="index.html" class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-full bg-white ring-1 ring-gray-200 flex items-center justify-center overflow-hidden">
+         <img id="site-logo" src="" alt="Logo" class="w-full h-full object-cover hidden">
+         <svg id="site-logo-fallback" class="w-7 h-7 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11v4m-2-2h4" />
+         </svg>
+        </div>
+        <div>
+         <h1 id="site-title" class="text-lg font-bold text-gray-800">Aile Sağlığı Merkezi</h1>
+         <p class="text-xs text-gray-500">T.C. Sağlık Bakanlığı</p>
+        </div>
+       </a>
+      </div>
+      <nav class="hidden md:flex items-center gap-6">
+       <a href="index.html#anasayfa" class="text-sm font-medium text-gray-600 hover:text-sky-600 transition-colors">Ana Sayfa</a>
+       <a href="index.html#hakkimizda" class="text-sm font-medium text-gray-600 hover:text-sky-600 transition-colors">Hakkımızda</a>
+       <a href="index.html#hizmetler" class="text-sm font-medium text-gray-600 hover:text-sky-600 transition-colors">Hizmetlerimiz</a>
+       <a href="index.html#ekibimiz" class="text-sm font-medium text-gray-600 hover:text-sky-600 transition-colors">Ekibimiz</a>
+       <a href="index.html#iletisim" class="text-sm font-medium btn-primary focus-ring px-4 py-2 rounded-lg transition-colors">İletişim</a>
+      </nav>
+      <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
+       <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+       </svg></button>
+     </div>
+     <nav id="mobile-menu" class="hidden md:hidden mt-4 pb-4 border-t border-gray-100 pt-4">
+      <div class="flex flex-col gap-3">
+       <a href="index.html#anasayfa" class="text-sm font-medium text-gray-600 hover:text-sky-600 py-2">Ana Sayfa</a>
+       <a href="index.html#hakkimizda" class="text-sm font-medium text-gray-600 hover:text-sky-600 py-2">Hakkımızda</a>
+       <a href="index.html#hizmetler" class="text-sm font-medium text-gray-600 hover:text-sky-600 py-2">Hizmetlerimiz</a>
+       <a href="index.html#ekibimiz" class="text-sm font-medium text-gray-600 hover:text-sky-600 py-2">Ekibimiz</a>
+       <a href="index.html#iletisim" class="text-sm font-medium btn-primary focus-ring px-4 py-2 rounded-lg text-center">İletişim</a>
+      </div>
+     </nav>
+    </div>
+   </header>
+
+   <!-- Gallery Detail Content -->
+   <main class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-4xl mx-auto px-4">
+     <!-- Back Button -->
+     <a href="index.html#galeri" class="inline-flex items-center gap-2 text-sky-600 hover:text-sky-700 mb-8 transition-colors">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      <span class="font-medium">Galeriye Dön</span>
+     </a>
+
+     <!-- Loading State -->
+     <div id="loading-state" class="text-center py-20">
+      <div class="inline-block w-8 h-8 border-2 border-sky-600 border-t-transparent rounded-full animate-spin"></div>
+      <p class="mt-4 text-gray-600">Yükleniyor...</p>
+     </div>
+
+     <!-- Error State -->
+     <div id="error-state" class="hidden text-center py-20">
+      <svg class="w-16 h-16 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <h2 class="text-2xl font-bold text-gray-800 mb-2">Görsel Bulunamadı</h2>
+      <p class="text-gray-600 mb-6">Aradığınız görsel bulunamadı veya silinmiş olabilir.</p>
+      <a href="index.html#galeri" class="inline-block btn-primary px-6 py-3 rounded-lg focus-ring">Galeriye Dön</a>
+     </div>
+
+     <!-- Gallery Detail Content -->
+     <div id="gallery-content" class="hidden">
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+       <!-- Image -->
+       <div class="relative bg-gray-900">
+        <img id="gallery-image" src="" alt="" class="w-full h-auto max-h-[70vh] object-contain mx-auto">
+       </div>
+       
+       <!-- Content -->
+       <div class="p-8 md:p-12">
+        <h1 id="gallery-title" class="text-3xl md:text-4xl font-bold text-gray-800 mb-6"></h1>
+        <div id="gallery-description" class="text-gray-700 leading-relaxed whitespace-pre-line text-lg"></div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </main>
+
+   <!-- Footer -->
+   <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-6xl mx-auto px-4">
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      <div>
+       <h3 class="text-lg font-bold mb-4">İletişim</h3>
+       <p id="footer-address" class="text-gray-300 text-sm leading-relaxed"></p>
+      </div>
+      <div>
+       <h3 class="text-lg font-bold mb-4">Hızlı Linkler</h3>
+       <div class="flex flex-col gap-2">
+        <a href="index.html#anasayfa" class="text-gray-300 hover:text-white text-sm transition-colors">Ana Sayfa</a>
+        <a href="index.html#hakkimizda" class="text-gray-300 hover:text-white text-sm transition-colors">Hakkımızda</a>
+        <a href="index.html#hizmetler" class="text-gray-300 hover:text-white text-sm transition-colors">Hizmetlerimiz</a>
+        <a href="index.html#ekibimiz" class="text-gray-300 hover:text-white text-sm transition-colors">Ekibimiz</a>
+       </div>
+      </div>
+      <div>
+       <h3 class="text-lg font-bold mb-4">Çalışma Saatleri</h3>
+       <p id="footer-hours" class="text-gray-300 text-sm"></p>
+      </div>
+     </div>
+     <div class="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm">
+      <p>&copy; 2024 Taşkent Merkez Aile Sağlığı Merkezi. Tüm hakları saklıdır.</p>
+     </div>
+    </div>
+   </footer>
+  </div>
+
+  <script>
+    let allData = [];
+    let config = {};
+
+    // Data SDK oluştur
+    function createDataSdk() {
+      const saveToAPI = async (data) => {
+        try {
+          const res = await fetch('/api/data', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+          return res.ok;
+        } catch (e) {
+          return false;
+        }
+      };
+
+      const fetchFromAPI = async () => {
+        try {
+          const res = await fetch('/api/data');
+          if (res.ok) {
+            const data = await res.json();
+            return data;
+          }
+        } catch (e) {
+          return null;
+        }
+        return null;
+      };
+
+      const load = async () => {
+        const apiData = await fetchFromAPI();
+        if (apiData) {
+          return { isOk: true, data: apiData };
+        }
+        const local = localStorage.getItem('asm_website_data');
+        if (local) {
+          try {
+            return { isOk: true, data: JSON.parse(local) };
+          } catch (e) {
+            return { isOk: false, error: 'Parse error' };
+          }
+        }
+        return { isOk: false, error: 'No data' };
+      };
+
+      const save = async (data) => {
+        const ok = await saveToAPI(data);
+        if (ok) {
+          localStorage.setItem('asm_website_data', JSON.stringify(data));
+          return { isOk: true };
+        }
+        try {
+          localStorage.setItem('asm_website_data', JSON.stringify(data));
+          return { isOk: true };
+        } catch (e) {
+          return { isOk: false, error: 'Save failed' };
+        }
+      };
+
+      const create = async (item) => {
+        const local = localStorage.getItem('asm_website_data');
+        let arr = [];
+        if (local) {
+          try {
+            arr = JSON.parse(local);
+          } catch (e) {
+            arr = [];
+          }
+        }
+        const backendId = item?.__backendId ?? item?.id ?? `local-${Date.now()}`;
+        const created = { ...item, __backendId: backendId, id: item?.id ?? backendId };
+        arr.push(created);
+        await save(arr);
+        return { isOk: true };
+      };
+
+      return { load, save, create };
+    }
+
+    window.dataSdk = createDataSdk();
+
+    // Initialize default data (same as index.html)
+    async function initializeDefaultData() {
+      const defaultData = [
+        {
+          id: 'general-info',
+          type: 'general',
+          site_title: 'Taşkent Merkez Aile Sağlığı Merkezi',
+          hero_title: 'Sağlığınız Güvende',
+          hero_subtitle: 'Ailenizin sağlığı için yanınızdayız. Uzman kadromuz ve modern yaklaşımımızla sizlere en kaliteli birinci basamak sağlık hizmetini sunuyoruz.',
+          phone_number: '(0332) 310 48 77',
+          address_text: 'Hıra Mahallesi, Vali İzzetbey Caddesi, No:80/A',
+          address_district: 'Taşkent',
+          address_city: 'Konya',
+          logo_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQ8t5_VHGrBqU3hKvvcKMEFHlDXl-W19sT2A&s',
+          hero_logo_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQ8t5_VHGrBqU3hKvvcKMEFHlDXl-W19sT2A&s',
+          about_logo_url: 'https://uzak.konyasm.gov.tr:15722/img/310/20250807_143948.jpg',
+          about_title: 'Güvenilir Sağlık Hizmeti',
+          about_p1: 'Aile Sağlığı Merkezimiz, T.C. Sağlık Bakanlığı bünyesinde faaliyet gösteren birinci basamak sağlık kuruluşudur. 2010 yılından bu yana halkımıza kesintisiz sağlık hizmeti sunmaktayız.',
+          about_p2: 'Amacımız, koruyucu sağlık hizmetleri başta olmak üzere, aile hekimliği kapsamında tüm vatandaşlarımıza eşit, kaliteli ve erişilebilir sağlık hizmeti sunmaktır.'
+        },
+        {
+          id: 'working-hours',
+          type: 'hours',
+          weekday_hours: '08:00 - 17:30',
+          saturday_hours: 'Kapalı',
+          sunday_hours: 'Kapalı',
+          hours_text: 'Pazartesi - Cuma: 08:00 - 17:30\nCumartesi - Pazar: Kapalı'
+        },
+        {
+          id: 'gallery-1769032644644',
+          type: 'gallery',
+          gallery_image_url: 'https://www.oglenogren.tv/img/asmsitesi/haberler/3_haber_ty47868.jpg',
+          gallery_title: 'Mevsimsel Grip Hastalığından Korunmanın En İyi Yolu Grip Aşısıdır',
+          gallery_description: 'Hastalıktan korunmada en etkili yöntem grip aşısıdır. Etkin ve güvenli aşılar tüm dünyada 60 yıldan uzun süredir kullanılmaktadır. \n\nDünya Sağlık Örgütü virüsün değişikliklerini yakından takip edip, aşı içeriği için yıllık önerilerde bulunur. Her yıl aşı içeriği Dünya Sağlık Örgütü\'nün tavsiyeleri dikkate alınarak hazırlanır.\n\nSon yıllarda kullanılan aşılarda influenza A\'nın iki alt tipi ve influenza B\'nin de bir alt tipi yer almaktadır. Hazırlanan aşı ile dolaşımda saptanan virüslerle antijenik benzerlik varsa aşı %50-80 korunma sağlayabilir. Sağlıklı erişkinlerde aşı ile sağlanan koruyucu antikor düzeyi influenza A için %80\'in üzerinde bildirilmiştir. Yaşlılarda koruyuculuk daha düşük olmakla birlikte komplikasyonları ve ölümleri azalttığı bilimsel yayınlarla gösterilmiştir.',
+          gallery_order: 0
+        },
+        {
+          id: 'gallery-1769033109130',
+          type: 'gallery',
+          gallery_image_url: 'https://www.oglenogren.tv/img/asmsitesi/haberler/3_haber_as51853.jpg',
+          gallery_title: 'Kardiyovasküler Risk Nedir?',
+          gallery_description: 'Kardiyovasküler Hastalık (kalp damar hastalığı; KVH), kalbinizi ve vücudunuzun kan damar sistemini olumsuz etkileyen hastalıkları kapsar. Yani hastalığın adındaki kardiyo kalp, vasküler de kan damarları ifade etmektedir.\n\nKardiyovasküler Hastalıklarının büyük çoğunluğu kronik rahatsızlıkları yansıtır. Bu rahatsızlıklar uzun sürede gelişip kendini belli etmektedir. Fakat kardiyovasküler Hastalıklarının bir bölümü kalbi ya da beyni besleyen bir damarda tıkanıklık meydana geldiğinde ansızın oluşan kalp krizleri ve inmeler gibi akut olaylar şeklinde meydana gelebilir.\n\nRiskinizi öğrenmek ve erken önlem almak için Aile Hekiminizden randevu alınız.',
+          gallery_order: 1
+        },
+        {
+          id: 'gallery-1769033162745',
+          type: 'gallery',
+          gallery_image_url: 'https://www.oglenogren.tv/img/asmsitesi/haberler/3_haber_ty39410.jpg',
+          gallery_title: 'Erken Teşhis Hayat Kurtarır..!',
+          gallery_description: 'Kanser günümüzün önemli bir halk sağlığı sorunu olup gündemdeki yerini korumaktadır. Sebebi bilinen ölümler sıralamasında kalp ve damar hastalıklarından sonra ikinci sıradaki kanser, öldürücülüğü yanında bıraktığı sakatlıklar ve tedavisindeki yüksek maliyetler nedeniyle iş gücünde ve ülke ekonomisinde çok ağır kayıplara neden olmaktadır.\n\nKanser konusunda toplumda farkındalık sağlanması, toplum bilincinin geliştirilmesi ve kanser taramaları, kanserle mücadelede en etkili yöntemlerin başında gelmektedir. Ülkemizde de Dünya Sağlık Örgütünün önerdiği üç kanser türünde tarama yapılmaktadır.\n\nTaraması yapılan kanserler:\n\nKadınlarda meme kanseri tarama programı kapsamında;\n\nAyda bir kendi kendine meme muayenesi (KKMM) yapması için danışmanlığın verilmesi\nYılda bir klinik meme muayenesi\n40-69 yaş arası kadınlara 2 yılda bir mammografi çekimi,\nKadınlarda serviks kanseri tarama programı kapsamında;\n\n30-65 yaş aralığındaki kadınlardan 5 yılda bir smear ve HPV -DNA testi yapılması\nKolorektal kanser taramaları;\n\n50-70 yaş aralığındaki erkek ve kadınlarda 2 yılda bir gaitada gizli kan testi yapılması,\n50-70 yaş arasında 10 yılda bir Kolonoskopi yapılmaktadır.',
+          gallery_order: 2
+        }
+      ];
+
+      for (const item of defaultData) {
+        await window.dataSdk.create(item);
+      }
+    }
+
+    // Initialize
+    async function init() {
+      const result = await window.dataSdk.load();
+      if (result.isOk) {
+        allData = result.data || [];
+      }
+
+      // If no data, initialize default data
+      if (allData.length === 0) {
+        await initializeDefaultData();
+        const reloadResult = await window.dataSdk.load();
+        if (reloadResult.isOk) {
+          allData = reloadResult.data || [];
+        }
+      }
+
+      // Get image index from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const imageIndexParam = urlParams.get('index');
+      const imageIdParam = urlParams.get('id'); // Geriye dönük uyumluluk için
+
+      // Find the image
+      const galleryImages = allData.filter(d => d.type === 'gallery').sort((a, b) => (a.gallery_order || 0) - (b.gallery_order || 0));
+      
+      let image = null;
+      
+      // Önce index ile dene (yeni yöntem)
+      if (imageIndexParam !== null) {
+        const index = parseInt(imageIndexParam, 10);
+        if (Number.isFinite(index) && index >= 0 && index < galleryImages.length) {
+          image = galleryImages[index];
+        }
+      }
+      
+      // Index ile bulunamadıysa ID ile dene (geriye dönük uyumluluk)
+      if (!image && imageIdParam) {
+        image = galleryImages.find(img => String(img.__backendId || img.id) === String(imageIdParam));
+      }
+
+      if (!image) {
+        console.error('Görsel bulunamadı. Index:', imageIndexParam, 'ID:', imageIdParam, 'Toplam görsel sayısı:', galleryImages.length);
+        showError();
+        return;
+      }
+
+      // Display the image
+      displayImage(image);
+      renderHeader();
+      renderFooter();
+    }
+
+    function displayImage(image) {
+      const loadingState = document.getElementById('loading-state');
+      const errorState = document.getElementById('error-state');
+      const galleryContent = document.getElementById('gallery-content');
+      const galleryImage = document.getElementById('gallery-image');
+      const galleryTitle = document.getElementById('gallery-title');
+      const galleryDescription = document.getElementById('gallery-description');
+
+      loadingState.classList.add('hidden');
+      errorState.classList.add('hidden');
+      galleryContent.classList.remove('hidden');
+
+      galleryImage.src = image.gallery_image_url;
+      galleryImage.alt = image.gallery_title || '';
+      galleryTitle.textContent = image.gallery_title || 'Başlık Yok';
+      galleryDescription.textContent = image.gallery_description || 'Açıklama bulunmuyor.';
+
+      // Update page title
+      document.title = `${image.gallery_title || 'Galeri Detay'} - Taşkent Merkez Aile Sağlığı Merkezi`;
+    }
+
+    function showError() {
+      const loadingState = document.getElementById('loading-state');
+      const errorState = document.getElementById('error-state');
+      const galleryContent = document.getElementById('gallery-content');
+
+      loadingState.classList.add('hidden');
+      galleryContent.classList.add('hidden');
+      errorState.classList.remove('hidden');
+    }
+
+    function renderHeader() {
+      const general = allData.find(d => d.type === 'general') || {};
+      const logoImg = document.getElementById('site-logo');
+      const logoFallback = document.getElementById('site-logo-fallback');
+      const siteTitle = document.getElementById('site-title');
+
+      if (logoImg && logoFallback) {
+        if (general.logo_url) {
+          logoImg.src = general.logo_url;
+          logoImg.classList.remove('hidden');
+          logoFallback.classList.add('hidden');
+        } else {
+          logoImg.src = '';
+          logoImg.classList.add('hidden');
+          logoFallback.classList.remove('hidden');
+        }
+      }
+
+      if (siteTitle && general.site_title) {
+        siteTitle.textContent = general.site_title;
+      }
+    }
+
+    function renderFooter() {
+      const general = allData.find(d => d.type === 'general') || {};
+      const hours = allData.find(d => d.type === 'hours') || {};
+      const footerAddress = document.getElementById('footer-address');
+      const footerHours = document.getElementById('footer-hours');
+
+      if (footerAddress) {
+        const addressParts = [];
+        if (general.address_text) addressParts.push(general.address_text);
+        if (general.address_district) addressParts.push(general.address_district);
+        if (general.address_city) addressParts.push(general.address_city);
+        footerAddress.textContent = addressParts.join(', ') || 'Adres bilgisi bulunmuyor.';
+      }
+
+      if (footerHours) {
+        const hoursText = hours.hours_text || 'Çalışma saatleri bilgisi bulunmuyor.';
+        footerHours.textContent = hoursText;
+      }
+    }
+
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileMenuBtn && mobileMenu) {
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+
+    init();
+  </script>
+ </body>
+</html>
