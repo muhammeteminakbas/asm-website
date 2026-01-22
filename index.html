@@ -158,6 +158,8 @@
         </div>
         <div class="md:col-span-2"><label class="block text-sm font-medium text-gray-700 mb-2">Logo URL (Üst Menü)</label> <input type="url" id="edit-logo-url" placeholder="https://..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
         </div>
+        <div class="md:col-span-2"><label class="block text-sm font-medium text-gray-700 mb-2">Hero Logo/Görsel URL (Ana Sayfa Sağ Taraf)</label> <input type="url" id="edit-hero-logo-url" placeholder="https://..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
+        </div>
         <div class="md:col-span-2"><label class="block text-sm font-medium text-gray-700 mb-2">Hakkımızda Logo URL</label> <input type="url" id="edit-about-logo-url" placeholder="https://..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
         </div>
         <div class="md:col-span-2"><label class="block text-sm font-medium text-gray-700 mb-2">Ana Başlık</label> <input type="text" id="edit-hero-title" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 outline-none">
@@ -1155,8 +1157,22 @@
       const aboutLogoFallback = document.getElementById('about-logo-fallback');
       const heroLogoImg = document.getElementById('hero-logo');
       const heroLogoFallback = document.getElementById('hero-logo-fallback');
+      const heroLogoUrl = general.hero_logo_url;
       const aboutLogoUrl = general.about_logo_url;
+      const hasHeroLogo = !!heroLogoUrl;
       const hasAboutLogo = !!aboutLogoUrl;
+
+      if (heroLogoImg && heroLogoFallback) {
+        if (hasHeroLogo) {
+          heroLogoImg.src = heroLogoUrl;
+          heroLogoImg.classList.remove('hidden');
+          heroLogoFallback.classList.add('hidden');
+        } else {
+          heroLogoImg.src = '';
+          heroLogoImg.classList.add('hidden');
+          heroLogoFallback.classList.remove('hidden');
+        }
+      }
 
       if (aboutLogoImg && aboutLogoFallback) {
         if (hasAboutLogo) {
@@ -1167,18 +1183,6 @@
           aboutLogoImg.src = '';
           aboutLogoImg.classList.add('hidden');
           aboutLogoFallback.classList.remove('hidden');
-        }
-      }
-
-      if (heroLogoImg && heroLogoFallback) {
-        if (hasAboutLogo) {
-          heroLogoImg.src = aboutLogoUrl;
-          heroLogoImg.classList.remove('hidden');
-          heroLogoFallback.classList.add('hidden');
-        } else {
-          heroLogoImg.src = '';
-          heroLogoImg.classList.add('hidden');
-          heroLogoFallback.classList.remove('hidden');
         }
       }
       
@@ -1276,6 +1280,7 @@
       document.getElementById('edit-site-title').value = general.site_title || '';
       document.getElementById('edit-phone').value = general.phone_number || '';
       document.getElementById('edit-logo-url').value = general.logo_url || '';
+      document.getElementById('edit-hero-logo-url').value = general.hero_logo_url || '';
       document.getElementById('edit-about-logo-url').value = general.about_logo_url || '';
       document.getElementById('edit-hero-title').value = general.hero_title || '';
       document.getElementById('edit-hero-subtitle').value = general.hero_subtitle || '';
@@ -2043,6 +2048,7 @@
           address_district: 'Taşkent',
           address_city: 'Konya',
           logo_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQ8t5_VHGrBqU3hKvvcKMEFHlDXl-W19sT2A&s',
+          hero_logo_url: '',
           about_logo_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQ8t5_VHGrBqU3hKvvcKMEFHlDXl-W19sT2A&s',
           about_title: 'Güvenilir Sağlık Hizmeti',
           about_p1: 'Aile Sağlığı Merkezimiz, T.C. Sağlık Bakanlığı bünyesinde faaliyet gösteren birinci basamak sağlık kuruluşudur. 2010 yılından bu yana halkımıza kesintisiz sağlık hizmeti sunmaktayız.',
@@ -2370,6 +2376,7 @@
         address_district: document.getElementById('edit-address-district').value,
         address_city: document.getElementById('edit-address-city').value,
         logo_url: document.getElementById('edit-logo-url').value,
+        hero_logo_url: document.getElementById('edit-hero-logo-url').value,
         about_logo_url: document.getElementById('edit-about-logo-url').value,
         about_title: document.getElementById('edit-about-title').value,
         about_p1: document.getElementById('edit-about-p1').value,
